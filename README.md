@@ -11,11 +11,9 @@ Angular application for building an ITIL-style help desk interface and workflows
 - Tailwind CSS 4
 - Vitest (via `ng test`)
 
-### Backend (API)
-- NestJS
-- TypeORM
+### Backend 
 - MySQL 8+
-- class-validator / class-transformer
+
 
 ### Database
 - MySQL 8+ with helpflowdb schema
@@ -44,7 +42,7 @@ Run the CreateScript.sql in the public folder ~ I also included some Sample Date
 1. Navigate to the frontend folder (if not already there):
 
 ```bash
-cd helpflow-itil-desk
+cd helpflow-frontend
 ```
 
 2. Install dependencies:
@@ -137,12 +135,6 @@ ng serve
 ng build
 ```
 
-- Run tests:
-
-```bash
-npm test
-```
-
 ### Backend
 
 - Start dev server:
@@ -156,28 +148,6 @@ npm start
 ```bash
 npm run build
 ```
-
-## API Endpoints
-
-### Tickets
-- `GET /api/tickets` - Get all tickets
-- `GET /api/tickets/:id` - Get ticket by ID
-- `POST /api/tickets` - Create new ticket
-- `PATCH /api/tickets/:id` - Update ticket
-- `GET /api/tickets/stats/dashboard` - Get dashboard statistics
-
-### Articles (Knowledge Base)
-- `GET /api/articles` - Get all articles
-- `GET /api/articles/:id` - Get article by ID
-- `POST /api/articles` - Create article
-
-### SLA
-- `GET /api/sla` - Get SLA policies
-- `GET /api/sla/:id` - Get SLA by ID
-
-### Comments
-- `GET /api/comments/ticket/:ticketId` - Get comments for ticket
-- `POST /api/comments` - Add comment to ticket
 
 ## Database Schema
 
@@ -194,19 +164,6 @@ The MySQL database includes the following core tables:
 
 For full schema with constraints and relationships, see the helpflowdb setup script.
 
-## Project Structure
-
-```text
-src/
-	app/
-		core/           # Core services/singletons
-		features/       # Feature modules/pages
-		shared/         # Reusable UI components (e.g. stat-card)
-		models/         # Shared interfaces/types
-		guards/         # Route guards
-		interceptors/   # HTTP interceptors
-		constants/      # App constants
-```
 
 ## Project explanation
 ```text
