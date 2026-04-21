@@ -6,15 +6,11 @@ import { Articles } from './pages/articles/articles';
 import { SlaManagement } from './pages/sla-management/sla-management';
 
 export const routes: Routes = [
+  { path: "", pathMatch: "full", redirectTo: "dashboard" },
   {
     path: "",
     component: MainLayout,
     children: [
-        {
-            path: "",
-            pathMatch: "full",
-            redirectTo: "dashboard",
-        },
         {
             path: "dashboard",
             loadComponent: () =>
@@ -37,5 +33,5 @@ export const routes: Routes = [
         },
         ],
     },
-    {path: "**", redirectTo: ""},
+    {path: "**", redirectTo: "dashboard"},
 ];

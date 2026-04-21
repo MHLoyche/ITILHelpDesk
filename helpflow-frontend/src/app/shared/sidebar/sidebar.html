@@ -5,7 +5,7 @@
     </div>
 
   <nav class="sidebar-section" aria-label="Primary">
-    <a routerLink="/dashboard" routerLinkActive="is-active" class="sidebar-link" >
+    <a routerLink="/dashboard" routerLinkActive="is-active" class="sidebar-link" [routerLinkActiveOptions]="{ exact: true }">
       <span class="sidebar-label">📊 Dashboard</span>
     </a>
 
