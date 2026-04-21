@@ -1,0 +1,17 @@
+.layout-shell {
+	display: flex;
+	min-height: 100vh;
+}
+
+.layout-content {
+	display: flex;
+	flex: 1;
+	flex-direction: column;
+	min-width: 0;
+}
+
+.page-content {
+	flex: 1;
+	padding: 1.5rem;
+	background: #f3f4f6;
+}

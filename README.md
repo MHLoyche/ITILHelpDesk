@@ -8,7 +8,7 @@ Angular application for building an ITIL-style help desk interface and workflows
 - Angular 21
 - TypeScript 5.9
 - Angular Material + CDK
-- Tailwind CSS 4
+- Component-scoped CSS (Angular styles)
 - Vitest (via `ng test`)
 
 ### Backend 
