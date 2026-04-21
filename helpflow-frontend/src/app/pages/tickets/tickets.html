@@ -1,40 +1,32 @@
 <div class="tickets-page">
 
-  <div class="tickets-header">
-    <h1>Tickets</h1>
+    <div class="tickets-header">
+        <h1>Tickets</h1>
+        <button class="new-ticket-btn">
+            + New Ticket
+        </button>
+    </div>
+    <div class="tickets-table-container">
+        <p *ngIf="loading()">Loading tickets...</p>
+        <p *ngIf="error()">{{ error() }}</p>
+        <table class="tickets-table" *ngIf="!loading() && !error()">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Title</th>
+                    <th>Requester</th>
+                    <th>Created</th>
+                </tr>
+            </thead>
 
-    <button class="new-ticket-btn">
-      + New Ticket
-    </button>
-  </div>
-
-  <div class="tickets-table-container">
-
-  <table class="tickets-table" *ngIf="!loading() && !error()">
-
-      <thead>
-        <tr>
-          <th>ID</th>
-          <th>Title</th>
-          <th>Requester</th>
-          <th>Created</th>
-        </tr>
-      </thead>
-
-  <p *ngIf="loading()">Loading tickets...</p>
-  <p *ngIf="error()">{{ error() }}</p>
-
-
-    <tbody>
-      <tr *ngFor="let ticket of tickets()">
-        <td>{{ ticket.ticket_id }}</td>
-        <td>{{ ticket.title }}</td>
-        <td>{{ ticket.requesterName }}</td>
-        <td>{{ ticket.createdAt | date:'short' }}</td>
-      </tr>
-    </tbody>
-  </table>
-
-  </div>
-
+            <tbody>
+                <tr *ngFor="let ticket of tickets()">
+                    <td>{{ ticket.ticket_id }}</td>
+                    <td>{{ ticket.title }}</td>
+                    <td>{{ ticket.requesterName }}</td>
+                    <td>{{ ticket.createdAt | date:'short' }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
 </div>
