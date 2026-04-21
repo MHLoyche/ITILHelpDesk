@@ -6,11 +6,14 @@ router.get('/', async (req, res) => {
   try {
     const [rows] = await db.query(`
       SELECT 
-        ticket_id,
-        title,
-        requesterName,
-        createdAt
-      FROM tickets
+        t.ticket_id,
+        t.title,
+        t.requesterName,
+        t.createdAt,
+        t.status_id,
+        s.name AS statusName
+      FROM tickets t
+      LEFT JOIN status s ON t.status_id = s.status_id
       ORDER BY createdAt DESC
     `);
 

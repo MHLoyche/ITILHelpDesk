@@ -16,6 +16,8 @@
                     <th>Title</th>
                     <th>Requester</th>
                     <th>Created</th>
+                    <th>Status</th>
+                    <th>Details</th>
                 </tr>
             </thead>
 
@@ -25,6 +27,8 @@
                     <td>{{ ticket.title }}</td>
                     <td>{{ ticket.requesterName }}</td>
                     <td>{{ ticket.createdAt | date:'short' }}</td>
+                    <td>{{ ticket.statusName || "Unknown" }}</td>
+                    <td><button class="details-btn">View</button></td>
                 </tr>
             </tbody>
         </table>
