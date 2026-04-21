@@ -1,0 +1,10 @@
+.footer-section{
+    background: linear-gradient(90deg, #1f3b6c 0%, #2a4a86 100%);
+    color: #d6e1f5;
+    text-align: right;
+    padding: 0.01rem;
+}
+
+p{
+    margin-right: 1rem;
+}
