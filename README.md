@@ -164,6 +164,13 @@ The MySQL database includes the following core tables:
 
 For full schema with constraints and relationships, see the helpflowdb setup script.
 
+## Production mode (for lighthouse test)
+
+```bash
+npm run build -- --configuration production
+
+npx serve -s dist/helpflow/browser -l 4200
+```
 
 ## Project explanation
 ```text
