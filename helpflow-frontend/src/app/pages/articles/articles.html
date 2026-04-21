@@ -1,1 +1,18 @@
-<p>articles works!</p>
+<div class="articles-page">
+    <div class="introduction">
+        <div class="introduction-content">
+            <h1>Welcome to the Articles Page</h1>
+            <p>Here you can find a collection of knowledge base articles that provide solutions to common issues and insights into our services. Whether you're looking for troubleshooting tips, how-to guides, or best practices, our articles are designed to help you quickly find the information you need.</p>
+            <p>Browse through the articles to enhance your understanding and resolve your queries efficiently.</p>
+        </div>
+    </div>
+
+    <p *ngIf="loading()">Loading articles...</p>
+    <p *ngIf="error()">{{ error() }}</p>
+
+    <div class="card" *ngFor="let article of articles()">
+        <div class="card-body">
+            <h5 class="card-title">a{{ article.title }}</h5>
+        </div>
+    </div>
+</div>
