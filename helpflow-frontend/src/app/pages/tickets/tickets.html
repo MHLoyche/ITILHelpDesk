@@ -16,8 +16,9 @@
                     <th>ID</th>
                     <th>Title</th>
                     <th>Requester</th>
-                    <th>Created</th>
+                    <th>Priority</th>
                     <th>Status</th>
+                    <th>Created</th>
                     <th>Details</th>
                 </tr>
             </thead>
@@ -27,8 +28,9 @@
                     <td>{{ ticket.ticket_id }}</td>
                     <td>{{ ticket.title }}</td>
                     <td>{{ ticket.requesterName }}</td>
-                    <td>{{ ticket.createdAt | date:'short' }}</td>
+                    <td>{{ ticket.priorityName || "Unknown" }}</td>
                     <td>{{ ticket.statusName || "Unknown" }}</td>
+                    <td>{{ ticket.createdAt | date:'short' }}</td>
                     <td><button class="details-btn">View</button></td>
                 </tr>
             </tbody>

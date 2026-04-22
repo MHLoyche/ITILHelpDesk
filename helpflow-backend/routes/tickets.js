@@ -11,10 +11,11 @@ router.get('/', async (req, res) => {
         t.title,
         t.requesterName,
         t.createdAt,
-        t.status_id,
+        p.name as priorityName,
         s.name AS statusName
       FROM tickets t
       LEFT JOIN status s ON t.status_id = s.status_id
+      LEFT JOIN priorities p ON t.priority_id = p.priority_id
       ORDER BY createdAt DESC
     `);
 
