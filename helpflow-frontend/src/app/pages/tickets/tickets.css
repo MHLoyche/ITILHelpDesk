@@ -83,3 +83,81 @@
     cursor: pointer;
     font-size: 14px;
 }
+
+.badge {
+  display: inline-block;
+  padding: 0.25rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  line-height: 1;
+  border: 1px solid transparent;
+}
+
+/* Priority colors */
+.badge-priority-critical {
+  background: #fee2e2;
+  color: #991b1b;
+  border-color: #fca5a5;
+}
+
+.badge-priority-high {
+  background: #fecaca;
+  color: #b91c1c;
+  border-color: #f87171;
+}
+
+.badge-priority-medium {
+  background: #ffedd5;
+  color: #9a3412;
+  border-color: #fdba74;
+}
+
+.badge-priority-low {
+  background: #dcfce7;
+  color: #166534;
+  border-color: #86efac;
+}
+
+/* Status colors */
+.badge-status-open {
+  background: #dbeafe;
+  color: #1e40af;
+  border-color: #93c5fd;
+}
+
+.badge-status-in-progress {
+  background: #e0e7ff;
+  color: #4338ca;
+  border-color: #a5b4fc;
+}
+
+.badge-status-pending {
+  background: #fef3c7;
+  color: #92400e;
+  border-color: #fcd34d;
+}
+
+.badge-status-resolved {
+  background: #dcfce7;
+  color: #166534;
+  border-color: #86efac;
+}
+
+.badge-status-closed {
+  background: #e5e7eb;
+  color: #374151;
+  border-color: #cbd5e1;
+}
+
+.badge-status-escalated {
+  background: #fee2e2;
+  color: #991b1b;
+  border-color: #fca5a5;
+}
+
+.badge-unknown {
+  background: #f1f5f9;
+  color: #475569;
+  border-color: #cbd5e1;
+}

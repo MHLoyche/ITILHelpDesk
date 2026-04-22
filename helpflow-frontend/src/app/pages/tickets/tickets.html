@@ -28,8 +28,16 @@
                     <td>{{ ticket.ticket_id }}</td>
                     <td>{{ ticket.title }}</td>
                     <td>{{ ticket.requesterName }}</td>
-                    <td>{{ ticket.priorityName || "Unknown" }}</td>
-                    <td>{{ ticket.statusName || "Unknown" }}</td>
+                    <td>
+                        <span class="badge" [ngClass]="getPriorityClass(ticket.priorityName)">
+                            {{ ticket.priorityName || "Unknown" }}
+                        </span>
+                    </td>
+                    <td>
+                        <span class="badge" [ngClass]="getStatusClass(ticket.statusName)">
+                            {{ ticket.statusName || "Unknown" }}
+                        </span>
+                    </td>
                     <td>{{ ticket.createdAt | date:'short' }}</td>
                     <td><button class="details-btn">View</button></td>
                 </tr>
