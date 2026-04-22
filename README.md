@@ -12,6 +12,7 @@ Angular application for building an ITIL-style help desk interface and workflows
 - Vitest (via `ng test`)
 
 ### Backend 
+- Express
 - MySQL 8+
 
 
