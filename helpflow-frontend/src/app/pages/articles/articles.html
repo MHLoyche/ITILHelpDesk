@@ -2,17 +2,20 @@
     <div class="introduction">
         <div class="introduction-content">
             <h1>Welcome to the Articles Page</h1>
-            <p>Here you can find a collection of knowledge base articles that provide solutions to common issues and insights into our services. Whether you're looking for troubleshooting tips, how-to guides, or best practices, our articles are designed to help you quickly find the information you need.</p>
-            <p>Browse through the articles to enhance your understanding and resolve your queries efficiently.</p>
+            <p>Browse knowledge base articles and open any card to read full content.</p>
         </div>
     </div>
+
+    <input type="text" 
+        placeholder="Filter by category or title..." 
+        class="filter-input" 
+        (input)="searchTerm.set($any($event.target).value)" 
+    />
 
     <p *ngIf="loading()">Loading articles...</p>
     <p *ngIf="error()">{{ error() }}</p>
 
-    <div class="card" *ngFor="let article of articles()">
-        <div class="card-body">
-            <h5 class="card-title">a{{ article.title }}</h5>
-        </div>
-    </div>
+    <a class="article-card" *ngFor="let article of filteredArticles()" [routerLink]="['/articles', article.article_id]">
+        <h3 class="article-title">{{ article.categoryName || "Uncategorized" }} - {{ article.title }}</h3>
+    </a>
 </div>

@@ -12,7 +12,6 @@ router.get('/', async (req, res) => {
             a.content,
             a.createdAt,
             a.updatedAt,
-            a.authorName,
             a.category_id,
             c.name AS categoryName
         FROM articles a
@@ -36,7 +35,6 @@ router.get('/:id', async (req, res) => {
           a.content,
           a.createdAt,
           a.updatedAt,
-          a.authorName,
           a.category_id,
           c.name AS categoryName
       FROM articles a

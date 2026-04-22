@@ -1,0 +1,14 @@
+<div class="article-detail-page">
+    <a routerLink="/articles">Back to articles</a>
+
+    <p *ngIf="loading()">Loading article...</p>
+    <p *ngIf="error()">{{ error() }}</p>
+
+    <article *ngIf="!loading() && !error() && article() as a">
+        <h1>{{ a.title }}</h1>
+            <p><strong>Category:</strong> {{ a.categoryName || "Uncategorized" }}</p>
+            <p><strong>Updated:</strong> {{ a.updatedAt | date:'short' }}</p>
+            <hr />
+        <div>{{ a.content }}</div>
+    </article>
+</div>

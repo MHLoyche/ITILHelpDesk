@@ -27,6 +27,11 @@ export const routes: Routes = [
             import("./pages/articles/articles").then((m) => m.Articles),
         },
         {
+            path: "articles/:id",
+            loadComponent: () =>
+            import("./pages/article-detail/article-detail").then((m) => m.ArticleDetail),
+        },
+        {
             path: "sla-management",
             loadComponent: () =>
             import("./pages/sla-management/sla-management").then((m) => m.SlaManagement),
