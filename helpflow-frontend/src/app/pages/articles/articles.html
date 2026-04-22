@@ -2,7 +2,7 @@
     <div class="introduction">
         <div class="introduction-content">
             <h1>Welcome to the Articles Page</h1>
-            <p>Browse knowledge base articles and open any card to read full content.</p>
+            <p>Browse knowledge base articles here. Click any article for more detailed information</p>
         </div>
     </div>
 
@@ -15,7 +15,29 @@
     <p *ngIf="loading()">Loading articles...</p>
     <p *ngIf="error()">{{ error() }}</p>
 
-    <a class="article-card" *ngFor="let article of filteredArticles()" [routerLink]="['/articles', article.article_id]">
-        <h3 class="article-title">{{ article.categoryName || "Uncategorized" }} - {{ article.title }}</h3>
+    <div class="articles-grid">
+    <a
+    class="article-card"
+    *ngFor="let article of filteredArticles()"
+    [routerLink]="['/articles', article.article_id]">
+        <div class="article-card-top">
+            <div class="article-icon-badge">
+                {{ getCategoryIcon(article.categoryName) }}
+            </div>
+
+            <div class="article-meta">
+                <h3 class="article-title">
+                    {{ article.categoryName || "Uncategorized" }} - {{ article.title }}
+                </h3>
+                <p class="article-preview">
+                {{ article.content | slice: 0:110 }}
+                {{ article.content.length > 110 ? "..." : "" }}
+                </p>
+            </div>
+        </div>
+        <div class="article-card-footer">
+            <span>View Article</span>
+        </div>
     </a>
+    </div>
 </div>

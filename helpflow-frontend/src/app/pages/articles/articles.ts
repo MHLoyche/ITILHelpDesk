@@ -10,6 +10,7 @@ import { CommonModule } from "@angular/common";
   templateUrl: "./articles.html",
   styleUrl: "./articles.css",
 })
+
 export class Articles implements OnInit {
   articles = signal<Article[]>([]);
   searchTerm = signal("");
@@ -27,6 +28,23 @@ export class Articles implements OnInit {
     });
   });
 
+  getCategoryIcon(categoryName: string | null): string {
+  switch ((categoryName || "Uncategorized").toLowerCase()) {
+    case "email":
+      return "✉";
+    case "network":
+      return "🌐";
+    case "printer":
+      return "🖨";
+    case "software":
+      return "💻";
+    case "vpn":
+      return "🔒";
+    default:
+      return "📄";
+  }
+}
+
   constructor(private articleService: ArticleService) {}
 
   ngOnInit(): void {
@@ -42,3 +60,4 @@ export class Articles implements OnInit {
     });
   }
 }
+
