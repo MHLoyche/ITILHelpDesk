@@ -65,12 +65,12 @@ npm start
 
 Frontend runs on: http://localhost:4200
 
-### Setup Backend (NestJS)
+### Setup Backend (Express)
 
 1. Navigate to backend folder:
 
 ```bash
-cd ../helpflow-api
+cd ../helpflow-backend
 ```
 
 2. Install dependencies:
@@ -105,13 +105,13 @@ Backend API runs on: http://localhost:3000
 
 **Terminal 1 - Frontend:**
 ```bash
-cd helpflow-itil-desk
+cd helpflow-frontend
 npm start
 ```
 
 **Terminal 2 - Backend:**
 ```bash
-cd helpflow-api
+cd helpflow-backend
 npm start
 ```
 
@@ -143,10 +143,18 @@ ng build
 npm start
 ```
 
-- Build for production:
+
+- Start backend with auto-reload during development:
 
 ```bash
-npm run build
+npm run dev
+```
+
+- Backend project structure:
+
+```text
+Express + MySQL
+server.js is the entry point
 ```
 
 ## Database Schema
