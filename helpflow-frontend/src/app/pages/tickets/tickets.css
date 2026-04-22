@@ -3,12 +3,15 @@
   background-color: #f5f7fa;
 }
 
+.ticket-intro{
+  font-size: 0.95rem;
+}
+
 /* Header */
 .tickets-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 25px;
 }
 
 .tickets-header h1 {
