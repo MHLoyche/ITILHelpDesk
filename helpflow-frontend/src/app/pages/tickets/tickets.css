@@ -3,8 +3,10 @@
   background-color: #f5f7fa;
 }
 
-.ticket-intro{
+.ticket-intro {
   font-size: 0.95rem;
+  margin: 0.35rem 0 0;
+  color: #64748b;
 }
 
 /* Header */
@@ -34,6 +36,66 @@
 
 .new-ticket-btn:hover {
   background-color: #1d4ed8;
+}
+
+.ticket-filters {
+  display: grid;
+  grid-template-columns: minmax(220px, 1.6fr) repeat(2, minmax(140px, 1fr));
+  gap: 0.75rem;
+  margin: 1rem 0 1rem;
+  padding: 0.75rem 0.85rem;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 14px;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.04);
+  align-items: end;
+}
+
+.search-wrapper {
+  display: flex;
+  min-width: 0;
+}
+
+.search-input,
+.filter-select {
+  width: 100%;
+  border: 1px solid #dbe3ef;
+  border-radius: 10px;
+  background: #fff;
+  color: #0f172a;
+  font-size: 0.95rem;
+  outline: none;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  box-sizing: border-box;
+}
+
+.search-input {
+  height: 44px;
+  padding: 0 1rem;
+}
+
+.filter-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.28rem;
+  font-size: 0.8rem;
+  color: #64748b;
+  font-weight: 600;
+}
+
+.filter-select {
+  height: 44px;
+  padding: 0 0.9rem;
+}
+
+.filter-field span {
+  line-height: 1;
+}
+
+.search-input:focus,
+.filter-select:focus {
+  border-color: #60a5fa;
+  box-shadow: 0 0 0 3px rgba(96, 165, 250, 0.18);
 }
 
 /* Table Container */
@@ -75,13 +137,19 @@
 }
 
 .details-btn{
-    background-color: #3b82f6;
-    color: white;
-    border: none;
-    padding: 6px 12px;
-    border-radius: 10px;
-    cursor: pointer;
-    font-size: 14px;
+  background-color: #3b82f6;
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.empty-state {
+  margin: 0;
+  padding: 1rem 1.25rem 1.2rem;
+  color: #64748b;
 }
 
 .badge {
@@ -160,4 +228,25 @@
   background: #f1f5f9;
   color: #475569;
   border-color: #cbd5e1;
+}
+
+@media (max-width: 1100px) {
+  .ticket-filters {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 720px) {
+  .tickets-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .ticket-filters {
+    grid-template-columns: 1fr;
+  }
+
+  .tickets-page {
+    padding: 20px;
+  }
 }

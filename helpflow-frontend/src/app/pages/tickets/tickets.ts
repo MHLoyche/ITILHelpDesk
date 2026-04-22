@@ -1,6 +1,15 @@
-import { Component, OnInit, signal } from '@angular/core';
+import { Component, OnInit, computed, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TicketService } from '../../services/ticket';
+
+export interface Ticket {
+  ticket_id: number;
+  title: string;
+  requesterName: string;
+  createdAt: string;
+  priorityName: string | null;
+  statusName: string | null;
+}
 
 @Component({
   selector: 'app-tickets',
@@ -10,9 +19,41 @@ import { TicketService } from '../../services/ticket';
   styleUrl: './tickets.css'
 })
 export class Tickets implements OnInit {
-  tickets = signal<any[]>([]);
+  tickets = signal<Ticket[]>([]);
+  searchTerm = signal('');
+  selectedStatus = signal('');
+  selectedPriority = signal('');
   loading = signal(true);
   error = signal<string | null>(null);
+
+  filteredTickets = computed(() => {
+    const term = this.searchTerm().toLowerCase().trim();
+    const status = this.selectedStatus().toLowerCase().trim();
+    const priority = this.selectedPriority().toLowerCase().trim();
+
+    return this.tickets().filter((ticket) => {
+      const matchesSearch =
+        !term ||
+        ticket.title.toLowerCase().includes(term) ||
+        ticket.requesterName.toLowerCase().includes(term);
+
+      const matchesStatus = !status || (ticket.statusName || '').toLowerCase() === status;
+      const matchesPriority = !priority || (ticket.priorityName || '').toLowerCase() === priority;
+
+      return matchesSearch && matchesStatus && matchesPriority;
+    });
+  });
+
+  statusOptions = [
+    'Open',
+    'In Progress',
+    'Pending',
+    'Resolved',
+    'Closed',
+    'Escalated',
+  ];
+
+  priorityOptions = ['Critical', 'High', 'Medium', 'Low'];
 
   getPriorityClass(priority: string | null | undefined): string {
     const value = (priority || '').toLowerCase().trim();

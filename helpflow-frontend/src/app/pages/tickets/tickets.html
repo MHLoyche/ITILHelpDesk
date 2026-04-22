@@ -1,15 +1,55 @@
 <div class="tickets-page">
-
     <div class="tickets-header">
-        <h1>Tickets</h1>
-        <button class="new-ticket-btn">
-            + New Ticket
-        </button>
+        <div>
+            <h1>Tickets</h1>
+            <p class="ticket-intro">Manage and track all support tickets in the system.</p>
     </div>
-    <p class="ticket-intro">Manage and track all support tickets in the system.</p>
+
+        <button class="new-ticket-btn">+ New Ticket</button>
+    </div>
+
+    <div class="ticket-filters">
+        <div class="search-wrapper">
+            <input
+                type="text"
+                class="search-input"
+                placeholder="Search tickets by title, requester..."
+                (input)="searchTerm.set($any($event.target).value)"
+            />
+        </div>
+
+        <label class="filter-field">
+            <span>Status</span>
+            <select
+                class="filter-select"
+                (change)="selectedStatus.set($any($event.target).value)"
+            >
+                <option value="">All Statuses</option>
+                <option *ngFor="let status of statusOptions" [value]="status">
+                    {{ status }}
+                </option>
+            </select>
+        </label>
+
+        <label class="filter-field">
+            <span>Priority</span>
+            <select
+                class="filter-select"
+                (change)="selectedPriority.set($any($event.target).value)"
+            >
+                <option value="">All Priorities</option>
+                <option *ngFor="let priority of priorityOptions" [value]="priority">
+                    {{ priority }}
+                </option>
+            </select>
+        </label>
+
+    </div>
+
     <div class="tickets-table-container">
         <p *ngIf="loading()">Loading tickets...</p>
         <p *ngIf="error()">{{ error() }}</p>
+
         <table class="tickets-table" *ngIf="!loading() && !error()">
             <thead>
                 <tr>
@@ -24,7 +64,7 @@
             </thead>
 
             <tbody>
-                <tr *ngFor="let ticket of tickets()">
+                <tr *ngFor="let ticket of filteredTickets()">
                     <td>{{ ticket.ticket_id }}</td>
                     <td>{{ ticket.title }}</td>
                     <td>{{ ticket.requesterName }}</td>
@@ -43,5 +83,9 @@
                 </tr>
             </tbody>
         </table>
+
+        <p class="empty-state" *ngIf="!loading() && !error() && filteredTickets().length === 0">
+            No tickets match your filters.
+        </p>
     </div>
 </div>
