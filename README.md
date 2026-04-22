@@ -158,6 +158,27 @@ Express + MySQL
 server.js is the entry point
 ```
 
+## API Reference
+
+All API routes are served from `http://localhost:3000/api`.
+
+### Tickets
+
+- `GET /api/tickets`
+
+Returns all tickets ordered by newest first.
+
+### Articles
+
+- `GET /api/articles`
+
+Returns all articles ordered by newest first.
+
+
+- `GET /api/articles/:id`
+
+Returns one article by ID.
+
 ## Database Schema
 
 The MySQL database includes the following core tables:
