@@ -10,6 +10,7 @@ export interface Ticket {
   createdAt: string;
   priorityName: string;
   statusName: string;
+  categoryName: string;
 }
 
 @Component({

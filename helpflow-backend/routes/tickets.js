@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const db = require('../db/connection');
 
-// Get all tickets with status name
+// Get all tickets with status name, supporter name, priority name and category name
 router.get('/', async (req, res) => {
   try {
     const [rows] = await db.query(`
@@ -13,11 +13,13 @@ router.get('/', async (req, res) => {
         t.createdAt,
         p.name as priorityName,
         s.name AS statusName,
-        i.name as supporterName
+        i.name as supporterName,
+        c.name as categoryName
       FROM tickets t
       LEFT JOIN status s ON t.status_id = s.status_id
       LEFT JOIN priorities p ON t.priority_id = p.priority_id
       LEFT JOIN supporters i ON t.supporter_id = i.supporter_id
+      LEFT JOIN categories c ON t.category_id = c.category_id
       ORDER BY createdAt DESC
     `);
 

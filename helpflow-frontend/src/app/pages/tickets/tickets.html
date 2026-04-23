@@ -48,7 +48,7 @@
         <table class="tickets-table" *ngIf="!loading() && !error()">
             <thead>
                 <tr>
-                    <th>ID</th>
+                    <th>Category</th>
                     <th>Title</th>
                     <th>Requester</th>
                     <th>Supporter</th>
@@ -61,7 +61,7 @@
 
             <tbody>
                 <tr *ngFor="let ticket of paginatedTickets()">
-                    <td>{{ ticket.ticket_id }}</td>
+                    <td>{{ ticket.categoryName }}</td>
                     <td>{{ ticket.title }}</td>
                     <td>{{ ticket.requesterName }}</td>
                     <td>{{ ticket.supporterName || "Unassigned" }}</td>
