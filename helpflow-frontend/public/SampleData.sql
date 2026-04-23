@@ -95,3 +95,618 @@ INSERT INTO articles (title, content, category_id) VALUES
 'Open File Explorer. Select This PC and choose Map Network Drive. Enter provided network path. Enable reconnect at sign-in and finish setup.',
 2
 );
+
+INSERT INTO tickets
+(
+    title,
+    description,
+    priority_id,
+    status_id,
+    requesterName,
+    requesterEmail,
+    supporter_id,
+    sla_id,
+    category_id,
+    createdAt,
+    updatedAt,
+    closedAt
+)
+VALUES
+
+(
+'Unable to send emails',
+'User reports Outlook is connected but emails remain in outbox and are not being delivered.',
+3,
+1,
+'Anna Jensen',
+'anna.jensen@company.local',
+1,
+1,
+1,
+NOW(),
+NOW(),
+NULL
+),
+
+(
+'VPN login failed',
+'Remote employee cannot connect to company VPN after password change.',
+3,
+2,
+'Peter Hansen',
+'peter.hansen@company.local',
+2,
+4,
+5,
+NOW(),
+NOW(),
+NULL
+),
+
+(
+'Printer offline in accounting',
+'Shared printer on 2nd floor is showing offline for multiple users.',
+2,
+1,
+'Sofie Larsen',
+'sofie.larsen@company.local',
+3,
+3,
+3,
+NOW(),
+NOW(),
+NULL
+),
+
+(
+'Slow internet connection',
+'Several users report unstable internet and slow access to websites.',
+4,
+5,
+'Jonas Madsen',
+'jonas.madsen@company.local',
+1,
+2,
+2,
+NOW(),
+NOW(),
+NULL
+),
+
+(
+'Software crashes on startup',
+'Finance software closes immediately after opening.',
+2,
+2,
+'Emma Nielsen',
+'emma.nielsen@company.local',
+2,
+5,
+4,
+NOW(),
+NOW(),
+NULL
+),
+
+(
+'Cannot map network drive',
+'User receives access denied when connecting to shared drive.',
+2,
+1,
+'Lucas Pedersen',
+'lucas.pedersen@company.local',
+3,
+2,
+2,
+NOW(),
+NOW(),
+NULL
+),
+
+(
+'Email spam filtering issue',
+'Important customer emails are incorrectly placed in junk folder.',
+1,
+2,
+'Freja Mortensen',
+'freja.mortensen@company.local',
+1,
+1,
+1,
+NOW(),
+NOW(),
+NULL
+),
+
+(
+'VPN frequently disconnects',
+'VPN connection drops every 10 minutes while working remotely.',
+3,
+1,
+'Mikkel Sørensen',
+'mikkel.sorensen@company.local',
+2,
+4,
+5,
+NOW(),
+NOW(),
+NULL
+),
+
+(
+'Printer toner warning',
+'Printer displays toner low warning and printing quality is reduced.',
+1,
+3,
+'Camilla Thomsen',
+'camilla.thomsen@company.local',
+3,
+3,
+3,
+NOW(),
+NOW(),
+NOW()
+),
+
+(
+'Application installation request',
+'User requests installation of approved PDF editing software.',
+1,
+4,
+'Oliver Kristensen',
+'oliver.kristensen@company.local',
+2,
+5,
+4,
+NOW(),
+NOW(),
+NOW()
+),
+
+(
+'WiFi unavailable in meeting room',
+'Wireless network unavailable in meeting room B for all attendees.',
+4,
+1,
+'Ida Christensen',
+'ida.christensen@company.local',
+1,
+2,
+2,
+NOW(),
+NOW(),
+NULL
+),
+
+(
+'Mailbox full warning',
+'User receives mailbox storage quota exceeded message.',
+2,
+3,
+'Noah Rasmussen',
+'noah.rasmussen@company.local',
+1,
+1,
+1,
+NOW(),
+NOW(),
+NOW()
+);
+
+-----
+
+INSERT INTO tickets (
+    title,
+    description,
+    priority_id,
+    status_id,
+    requesterName,
+    requesterEmail,
+    supporter_id,
+    sla_id,
+    category_id,
+    createdAt,
+    updatedAt,
+    closedAt
+)
+VALUES
+
+-- 1
+(
+'Laptop overheating frequently',
+'User reports laptop fan running constantly and device gets very hot.',
+3,
+1,
+'Daniel Nielsen',
+'daniel.nielsen@email.com',
+1,
+1,
+5,
+NOW(),
+NOW(),
+NULL
+),
+
+-- 2
+(
+'Cannot connect to VPN',
+'VPN client fails during login authentication.',
+3,
+2,
+'Sarah Jensen',
+'sarah.jensen@email.com',
+2,
+1,
+2,
+NOW(),
+NOW(),
+NULL
+),
+
+-- 3
+(
+'Outlook keeps crashing',
+'Outlook closes immediately after startup.',
+2,
+2,
+'Emma Larsen',
+'emma.larsen@email.com',
+3,
+2,
+1,
+NOW(),
+NOW(),
+NULL
+),
+
+-- 4
+(
+'Printer not responding',
+'Office printer appears offline for all users.',
+2,
+1,
+'Lucas Hansen',
+'lucas.hansen@email.com',
+4,
+2,
+3,
+NOW(),
+NOW(),
+NULL
+),
+
+-- 5
+(
+'Slow internet in office',
+'Multiple users report unstable and slow network speeds.',
+3,
+2,
+'Oliver Madsen',
+'oliver.madsen@email.com',
+1,
+1,
+4,
+NOW(),
+NOW(),
+NULL
+),
+
+-- 6
+(
+'Need Adobe Acrobat installed',
+'Requester needs Acrobat for PDF editing tasks.',
+1,
+1,
+'Freja Thomsen',
+'freja.thomsen@email.com',
+2,
+3,
+5,
+NOW(),
+NOW(),
+NULL
+),
+
+-- 7
+(
+'Password reset required',
+'User forgot password and cannot log in.',
+2,
+4,
+'Noah Christensen',
+'noah.christensen@email.com',
+3,
+2,
+1,
+NOW(),
+NOW(),
+NOW()
+),
+
+-- 8
+(
+'WiFi unstable in meeting room',
+'Wireless connection drops repeatedly.',
+2,
+1,
+'Ida Sørensen',
+'ida.sorensen@email.com',
+4,
+2,
+4,
+NOW(),
+NOW(),
+NULL
+),
+
+-- 9
+(
+'New employee account setup',
+'Create account, mailbox and permissions for new starter.',
+1,
+2,
+'Anna Pedersen',
+'anna.pedersen@email.com',
+1,
+3,
+5,
+NOW(),
+NOW(),
+NULL
+),
+
+-- 10
+(
+'Scanner not detected',
+'USB scanner missing after reboot.',
+1,
+1,
+'Mikkel Rasmussen',
+'mikkel.rasmussen@email.com',
+2,
+3,
+3,
+NOW(),
+NOW(),
+NULL
+),
+
+-- 11
+(
+'Teams microphone not working',
+'Microphone not recognized in Microsoft Teams.',
+2,
+2,
+'Sofie Mortensen',
+'sofie.mortensen@email.com',
+3,
+2,
+5,
+NOW(),
+NOW(),
+NULL
+),
+
+-- 12
+(
+'Access request to finance folder',
+'Need read/write access to shared finance directory.',
+2,
+1,
+'Jonas Poulsen',
+'jonas.poulsen@email.com',
+4,
+2,
+5,
+NOW(),
+NOW(),
+NULL
+),
+
+-- 13
+(
+'Blue screen after update',
+'Laptop crashes after Windows update installation.',
+3,
+2,
+'Camilla Jørgensen',
+'camilla.jorgensen@email.com',
+1,
+1,
+5,
+NOW(),
+NOW(),
+NULL
+),
+
+-- 14
+(
+'Mailbox full warning',
+'Cannot receive new emails due to mailbox size.',
+1,
+4,
+'Maria Olsen',
+'maria.olsen@email.com',
+2,
+3,
+1,
+NOW(),
+NOW(),
+NOW()
+),
+
+-- 15
+(
+'VPN setup for consultant',
+'Temporary consultant requires VPN access.',
+1,
+1,
+'Peter Holm',
+'peter.holm@email.com',
+3,
+3,
+2,
+NOW(),
+NOW(),
+NULL
+),
+
+-- 16
+(
+'Keyboard keys stuck',
+'Several keys on laptop keyboard do not respond.',
+1,
+1,
+'Julie Andersen',
+'julie.andersen@email.com',
+4,
+3,
+5,
+NOW(),
+NOW(),
+NULL
+),
+
+-- 17
+(
+'Shared drive unavailable',
+'Department shared drive cannot be reached.',
+3,
+2,
+'Thomas Eriksen',
+'thomas.eriksen@email.com',
+1,
+1,
+4,
+NOW(),
+NOW(),
+NULL
+),
+
+-- 18
+(
+'Install Visual Studio Code',
+'Developer requests VS Code on workstation.',
+1,
+4,
+'Andreas Lund',
+'andreas.lund@email.com',
+2,
+3,
+5,
+NOW(),
+NOW(),
+NOW()
+),
+
+-- 19
+(
+'Printer toner replacement',
+'Printer displays low toner warning.',
+1,
+1,
+'Nadia Kristensen',
+'nadia.kristensen@email.com',
+3,
+3,
+3,
+NOW(),
+NOW(),
+NULL
+),
+
+-- 20
+(
+'Laptop battery drains quickly',
+'Battery only lasts 30 minutes unplugged.',
+2,
+2,
+'Kasper Winther',
+'kasper.winther@email.com',
+4,
+2,
+5,
+NOW(),
+NOW(),
+NULL
+),
+
+-- 21
+(
+'Cannot map network drive',
+'Mapped drive disappears after restart.',
+2,
+1,
+'Louise Dahl',
+'louise.dahl@email.com',
+1,
+2,
+4,
+NOW(),
+NOW(),
+NULL
+),
+
+-- 22
+(
+'Need access to CRM system',
+'User requires access to customer management platform.',
+2,
+2,
+'Victor Møller',
+'victor.moller@email.com',
+2,
+2,
+5,
+NOW(),
+NOW(),
+NULL
+),
+
+-- 23
+(
+'Email spam filtering issue',
+'Important emails incorrectly marked as spam.',
+2,
+1,
+'Helene Berg',
+'helene.berg@email.com',
+3,
+2,
+1,
+NOW(),
+NOW(),
+NULL
+),
+
+-- 24
+(
+'Second monitor flickering',
+'External monitor flashes intermittently.',
+1,
+1,
+'Rasmus Friis',
+'rasmus.friis@email.com',
+4,
+3,
+5,
+NOW(),
+NOW(),
+NULL
+),
+
+-- 25
+(
+'Software crashes on startup',
+'Business application closes immediately when opened.',
+3,
+2,
+'Mathias Løyche',
+'mathias.loyche@email.com',
+1,
+1,
+5,
+NOW(),
+NOW(),
+NULL
+);
