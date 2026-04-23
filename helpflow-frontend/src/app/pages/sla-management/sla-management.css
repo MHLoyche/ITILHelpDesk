@@ -1,0 +1,112 @@
+.sla-page {
+    padding: 30px;
+    background: #f5f7fa;
+}
+
+.sla-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.sla-header h1 {
+    margin: 0;
+    font-size: 32px;
+    color: #1e293b;
+}
+
+.sla-header p {
+    margin: 0.35rem 0 0;
+    color: #64748b;
+}
+
+.new-policy-btn {
+    background: #2563eb;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    padding: 12px 18px;
+    font-size: 15px;
+    cursor: pointer;
+}
+
+.sla-stats {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.stat-card {
+    background: #fff;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    padding: 1rem 1.2rem;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.06);
+}
+
+.stat-card h3 {
+    margin: 0;
+    font-size: 1.8rem;
+    color: #0f172a;
+}
+
+.stat-card p {
+    margin: 0.35rem 0 0;
+    color: #64748b;
+    font-weight: 600;
+}
+
+.sla-table-wrap {
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+    overflow: hidden;
+}
+
+.sla-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.sla-table thead {
+    background: #e2e8f0;
+}
+
+.sla-table th,
+.sla-table td {
+    text-align: left;
+    padding: 14px 16px;
+}
+
+.sla-table td {
+    border-top: 1px solid #e5e7eb;
+    color: #475569;
+}
+
+.sla-table tbody tr:hover {
+    background: #f8fafc;
+}
+
+.status-msg {
+    margin: 0;
+    padding: 1rem 1.2rem;
+    color: #64748b;
+}
+
+.status-msg.error {
+    color: #b91c1c;
+}
+
+@media (max-width: 900px) {
+    .sla-stats {
+        grid-template-columns: 1fr;
+    }
+
+    .sla-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+}

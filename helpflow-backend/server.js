@@ -12,10 +12,13 @@ app.use(express.json());
 // Route imports
 const ticketRoutes = require('./routes/tickets');
 const articlesRoutes = require('./routes/articles');
+const slaRoutes = require('./routes/sla');
 
 // Using routes
 app.use('/api/articles', articlesRoutes);
 app.use('/api/tickets', ticketRoutes);
+app.use('/api/slas', slaRoutes);
+
 
 // Start server
 app.listen(process.env.PORT, () => {

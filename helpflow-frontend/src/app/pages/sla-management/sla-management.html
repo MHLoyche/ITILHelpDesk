@@ -1,1 +1,46 @@
-<p>sla-management works!</p>
+<section class="sla-page"> 
+    <header class="sla-header"> 
+        <div> 
+            <h1>SLA Management</h1> 
+            <p>Create, edit and manage all Service Level Agreement policies.</p> 
+        </div> 
+        <button class="new-policy-btn">+ New SLA Policy</button> 
+    </header> <section class="sla-stats"> 
+        <article class="stat-card"> 
+            <h3>{{ totalPolicies() }}</h3> 
+            <p>Total SLA Policies</p> 
+        </article> 
+        <article class="stat-card"> 
+            <h3>{{ avgResponseHours() }}h</h3> 
+            <p>Avg Response Time</p> 
+        </article> 
+        <article class="stat-card"> 
+            <h3>{{ avgResolveHours() }}h</h3> 
+            <p>Avg Resolution Time</p> 
+        </article> </section> 
+        <section class="sla-table-wrap"> 
+            <p class="status-msg" *ngIf="loading()">Loading SLA policies...</p> 
+            <p class="status-msg error" *ngIf="error()">{{ error() }}</p>
+        <table class="sla-table" *ngIf="!loading() && !error()">
+            <thead>
+                <tr>
+                    <th>SLA ID</th>
+                    <th>Service Name</th>
+                    <th>Response (Hours)</th>
+                    <th>Resolve (Hours)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let sla of slas()">
+                    <td>{{ sla.sla_id }}</td>
+                    <td>{{ sla.serviceName }}</td>
+                    <td>{{ sla.responseHours }}</td>
+                    <td>{{ sla.resolveHours }}</td>
+                </tr>
+            </tbody>
+        </table>
+        <p class="status-msg" *ngIf="!loading() && !error() && slas().length === 0">
+        No SLA policies found.
+        </p>
+    </section> 
+</section>
