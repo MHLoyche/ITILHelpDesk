@@ -10,12 +10,7 @@
 
     <div class="ticket-filters">
         <div class="search-wrapper">
-            <input
-                type="text"
-                class="search-input"
-                placeholder="Search tickets by title, requester..."
-                (input)="searchTerm.set($any($event.target).value)"
-            />
+            <input type="text" class="search-input" placeholder="Search tickets by title, requester..." (input)="searchTerm.set($any($event.target).value)" />
         </div>
 
         <label class="filter-field">
@@ -56,6 +51,7 @@
                     <th>ID</th>
                     <th>Title</th>
                     <th>Requester</th>
+                    <th>Supporter</th>
                     <th>Priority</th>
                     <th>Status</th>
                     <th>Created</th>
@@ -64,10 +60,11 @@
             </thead>
 
             <tbody>
-                <tr *ngFor="let ticket of filteredTickets()">
+                <tr *ngFor="let ticket of paginatedTickets()">
                     <td>{{ ticket.ticket_id }}</td>
                     <td>{{ ticket.title }}</td>
                     <td>{{ ticket.requesterName }}</td>
+                    <td>{{ ticket.supporterName || "Unassigned" }}</td>
                     <td>
                         <span class="badge" [ngClass]="getPriorityClass(ticket.priorityName)">
                             {{ ticket.priorityName || "Unknown" }}
@@ -87,5 +84,25 @@
         <p class="empty-state" *ngIf="!loading() && !error() && filteredTickets().length === 0">
             No tickets match your filters.
         </p>
+
+        <div class="pagination" *ngIf="!loading() && !error() && totalPages() > 1">
+            <button class="pagination-btn" [disabled]="currentPage() === 1" (click)="previousPage()">
+                ← Previous
+            </button>
+
+        <div class="page-numbers">
+            <button *ngFor="let page of getPageNumbers()" class="page-btn" [class.active]="page === currentPage()" (click)="goToPage(page)">
+                {{ page }}
+            </button>
+        </div>
+
+        <button class="pagination-btn" [disabled]="currentPage() === totalPages()" (click)="nextPage()">
+            Next →
+        </button>
+
+        <span class="page-info">
+            Page {{ currentPage() }} of {{ totalPages() }}
+        </span>
+    </div>
     </div>
 </div>

@@ -6,9 +6,10 @@ export interface Ticket {
   ticket_id: number;
   title: string;
   requesterName: string;
+  supporterName: string;
   createdAt: string;
-  priorityName: string | null;
-  statusName: string | null;
+  priorityName: string;
+  statusName: string;
 }
 
 @Component({
@@ -18,25 +19,43 @@ export interface Ticket {
   templateUrl: './tickets.html',
   styleUrl: './tickets.css'
 })
+
 export class Tickets implements OnInit {
   tickets = signal<Ticket[]>([]);
   searchTerm = signal('');
   selectedStatus = signal('');
   selectedPriority = signal('');
+  currentPage = signal(1);
+  readonly itemsPerPage = 10;
+
   loading = signal(true);
   error = signal<string | null>(null);
 
+  // inject TicketService to fetch tickets from backend
+  constructor(private ticketService: TicketService) {}
+
+  // fetch tickets from backend on component initialization
+  ngOnInit(): void {
+    this.ticketService.getTickets().subscribe({
+      next: (data) => {
+        this.tickets.set(data ?? []);
+        this.loading.set(false);
+      },
+      error: () => {
+        this.error.set('Failed to load tickets');
+        this.loading.set(false);
+      }
+    });
+  }
+
+  // compute filtered tickets based on search term, selected status, and selected priority
   filteredTickets = computed(() => {
     const term = this.searchTerm().toLowerCase().trim();
     const status = this.selectedStatus().toLowerCase().trim();
     const priority = this.selectedPriority().toLowerCase().trim();
 
     return this.tickets().filter((ticket) => {
-      const matchesSearch =
-        !term ||
-        ticket.title.toLowerCase().includes(term) ||
-        ticket.requesterName.toLowerCase().includes(term);
-
+      const matchesSearch = !term || ticket.title.toLowerCase().includes(term) || ticket.requesterName.toLowerCase().includes(term);
       const matchesStatus = !status || (ticket.statusName || '').toLowerCase() === status;
       const matchesPriority = !priority || (ticket.priorityName || '').toLowerCase() === priority;
 
@@ -44,6 +63,55 @@ export class Tickets implements OnInit {
     });
   });
 
+  // calculate total pages based on filtered tickets
+  totalPages = computed(() => {
+    return Math.ceil(this.filteredTickets().length / this.itemsPerPage);
+  });
+
+  // get tickets for current page
+  paginatedTickets = computed(() => {
+    const filtered = this.filteredTickets();
+    const startIndex = (this.currentPage() - 1) * this.itemsPerPage;
+    return filtered.slice(startIndex, startIndex + this.itemsPerPage);
+  })
+
+  goToPage(page: number) {
+    if (page >= 1 && page <= this.totalPages()) {
+      this.currentPage.set(page);
+    }
+  }
+
+  previousPage() {
+    if (this.currentPage() > 1) {
+      this.currentPage.update(p => p - 1);
+    }
+  }
+
+  nextPage() {
+    if (this.currentPage() < this.totalPages()) {
+      this.currentPage.update(p => p + 1);
+    }
+  }
+
+  getPageNumbers() {
+    const total = this.totalPages();
+    const current = this.currentPage();
+    const pages: number[] = [];
+    let start = Math.max(1, current - 2);
+    let end = Math.min(total, current + 2);
+
+    if (end - start < 4) {
+      if (start === 1) end = Math.min(total, 5);
+      else start = Math.max(1, end - 4);
+    }
+    
+    for (let i = start; i <= end; i++) {
+      pages.push(i);
+    }
+    return pages;
+  }
+
+  // options for status and priority filters
   statusOptions = [
     'Open',
     'In Progress',
@@ -53,8 +121,14 @@ export class Tickets implements OnInit {
     'Escalated',
   ];
 
-  priorityOptions = ['Critical', 'High', 'Medium', 'Low'];
+  priorityOptions = [
+    'Critical', 
+    'High', 
+    'Medium', 
+    'Low'
+  ];
 
+  // helper methods to get CSS classes based on priority and status
   getPriorityClass(priority: string | null | undefined): string {
     const value = (priority || '').toLowerCase().trim();
     switch (value) {
@@ -87,20 +161,5 @@ export class Tickets implements OnInit {
       default:
         return 'badge-unknown';
     }
-  }
-
-  constructor(private ticketService: TicketService) {}
-
-  ngOnInit(): void {
-    this.ticketService.getTickets().subscribe({
-      next: (data) => {
-        this.tickets.set(data ?? []);
-        this.loading.set(false);
-      },
-      error: () => {
-        this.error.set('Failed to load tickets');
-        this.loading.set(false);
-      }
-    });
   }
 }
