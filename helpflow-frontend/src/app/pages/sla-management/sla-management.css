@@ -39,21 +39,42 @@
     margin-bottom: 1rem;
 }
 
-.stat-card {
-    background: #fff;
-    border: 1px solid #e5e7eb;
+
+.stat-card-breached{
+    background: #ffffff;
+    border: 2px solid #8f0101;
     border-radius: 12px;
     padding: 1rem 1.2rem;
     box-shadow: 0 4px 14px rgba(0, 0, 0, 0.06);
 }
 
-.stat-card h3 {
+.stat-card-held {
+    background: #ffffff;
+    border: 2px solid #00a600;
+    border-radius: 12px;
+    padding: 1rem 1.2rem;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.06);
+}
+
+.stat-card-total {
+    background: #fff;
+    border: 2px solid #0037a4;
+    border-radius: 12px;
+    padding: 1rem 1.2rem;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.06);
+}
+
+.stat-card-held h3,
+.stat-card-breached h3,
+.stat-card-total h3 {
     margin: 0;
     font-size: 1.8rem;
     color: #0f172a;
 }
 
-.stat-card p {
+.stat-card-held p,
+.stat-card-breached p,
+.stat-card-total p  {
     margin: 0.35rem 0 0;
     color: #64748b;
     font-weight: 600;

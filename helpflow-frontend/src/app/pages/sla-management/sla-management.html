@@ -6,15 +6,15 @@
         </div> 
         <button class="new-policy-btn">+ New SLA Policy</button> 
     </header> <section class="sla-stats"> 
-        <article class="stat-card"> 
+        <article class="stat-card-total"> 
             <h3>{{ totalPolicies() }}</h3> 
             <p>Total SLA Policies</p> 
         </article> 
-        <article class="stat-card"> 
+        <article class="stat-card-held"> 
             <h3>{{ successfulHeldCount() }}</h3> 
             <p>Successfully Held SLAs</p> 
         </article> 
-        <article class="stat-card"> 
+        <article class="stat-card-breached"> 
             <h3>{{ breachedCount() }}</h3> 
             <p>Breached SLAs</p> 
         </article> </section> 
