@@ -1,6 +1,6 @@
 import { Component, computed, signal } from "@angular/core";
 import { CommonModule } from "@angular/common";
-import { SlaPolicy, SlaService } from "../../services/sla";
+import { CreateSlaRequest, SlaPolicy, SlaService } from "../../services/sla";
 import { TicketService } from "../../services/ticket";
 import { forkJoin } from "rxjs";
 
@@ -27,6 +27,12 @@ export class SlaManagement {
   tickets = signal<SlaTrackedTicket[]>([]);
   loading = signal(true);
   error = signal("");
+  showCreateForm = signal(false);
+  saving = signal(false);
+  saveError = signal("");
+  categoryName = signal("");
+  responseHours = signal<number | null>(null);
+  resolveHours = signal<number | null>(null);
 
   // computed properties for SLA statistics
   totalPolicies = computed(() => this.slas().length);
@@ -69,6 +75,53 @@ export class SlaManagement {
       error: () => {
         this.error.set("Failed to load SLA data.");
         this.loading.set(false);
+      },
+    });
+  }
+
+  openCreateForm(): void {
+    this.saveError.set("");
+    this.showCreateForm.set(true);
+  }
+
+  cancelCreateForm(): void {
+    this.showCreateForm.set(false);
+    this.saveError.set("");
+    this.categoryName.set("");
+    this.responseHours.set(null);
+    this.resolveHours.set(null);
+  }
+
+  createSla(): void {
+    const category = this.categoryName().trim();
+    const responseHours = this.responseHours();
+    const resolveHours = this.resolveHours();
+
+    if (!category || responseHours === null || resolveHours === null) {
+      this.saveError.set("Please fill in category name, response hours, and resolve hours.");
+      return;
+    }
+
+    this.saving.set(true);
+    this.saveError.set("");
+
+    const payload: CreateSlaRequest = {
+      categoryName: category,
+      responseHours,
+      resolveHours,
+    };
+
+    this.slaService.createSla(payload).subscribe({
+      next: () => {
+        this.cancelCreateForm();
+        this.loadSlas();
+      },
+      error: () => {
+        this.saveError.set("Failed to create SLA policy.");
+        this.saving.set(false);
+      },
+      complete: () => {
+        this.saving.set(false);
       },
     });
   }

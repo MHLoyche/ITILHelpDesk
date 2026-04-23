@@ -9,6 +9,12 @@ export interface SlaPolicy {
   resolveHours: number;
 }
 
+export interface CreateSlaRequest {
+  categoryName: string;
+  responseHours: number;
+  resolveHours: number;
+}
+
 @Injectable({
   providedIn: "root",
 })
@@ -19,6 +25,10 @@ export class SlaService {
   constructor(private http: HttpClient) {}
 
   getSlas(): Observable<SlaPolicy[]> {
-  return this.http.get<SlaPolicy[]>(this.apiUrl);
+    return this.http.get<SlaPolicy[]>(this.apiUrl);
+  }
+
+  createSla(payload: CreateSlaRequest): Observable<SlaPolicy> {
+    return this.http.post<SlaPolicy>(this.apiUrl, payload);
   }
 }

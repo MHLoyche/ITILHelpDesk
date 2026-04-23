@@ -4,7 +4,7 @@
             <h1>SLA Management</h1> 
             <p>Create, edit and manage all Service Level Agreement policies.</p> 
         </div> 
-        <button class="new-policy-btn">+ New SLA Policy</button> 
+        <button class="new-policy-btn" type="button" (click)="openCreateForm()">+ New SLA Policy</button> 
     </header> <section class="sla-stats"> 
         <article class="stat-card-total"> 
             <h3>{{ totalPolicies() }}</h3> 
@@ -18,6 +18,60 @@
             <h3>{{ breachedCount() }}</h3> 
             <p>Breached SLAs</p> 
         </article> </section> 
+
+        <section class="create-panel" *ngIf="showCreateForm()"> 
+            <div class="create-panel-header"> 
+                <h2>Create New SLA Policy</h2> 
+                <p>New SLA service name will be saved as the category name plus " service".</p> 
+            </div> 
+
+            <div class="create-grid"> 
+                <label class="form-field"> 
+                    <span>Category Name</span> 
+                    <input 
+                        type="text" 
+                        class="form-input" 
+                        placeholder="e.g. Email" 
+                        [value]="categoryName()" 
+                        (input)="categoryName.set($any($event.target).value)" 
+                    /> 
+                </label> 
+
+                <label class="form-field"> 
+                    <span>Response Hours</span> 
+                    <input 
+                        type="number" 
+                        class="form-input" 
+                        min="0" 
+                        step="1" 
+                        [value]="responseHours() ?? ''" 
+                        (input)="responseHours.set($any($event.target).value === '' ? null : +$any($event.target).value)" 
+                    /> 
+                </label> 
+
+                <label class="form-field"> 
+                    <span>Resolve Hours</span> 
+                    <input 
+                        type="number" 
+                        class="form-input" 
+                        min="0" 
+                        step="1" 
+                        [value]="resolveHours() ?? ''" 
+                        (input)="resolveHours.set($any($event.target).value === '' ? null : +$any($event.target).value)" 
+                    /> 
+                </label> 
+            </div> 
+
+            <p class="status-msg error" *ngIf="saveError()">{{ saveError() }}</p> 
+
+            <div class="create-actions"> 
+                <button class="secondary-btn" type="button" (click)="cancelCreateForm()">Cancel</button> 
+                <button class="primary-btn" type="button" (click)="createSla()" [disabled]="saving()"> 
+                    {{ saving() ? 'Saving...' : 'Create SLA Policy' }} 
+                </button> 
+            </div> 
+        </section> 
+
         <section class="sla-table-wrap"> 
             <p class="status-msg" *ngIf="loading()">Loading SLA policies...</p> 
             <p class="status-msg error" *ngIf="error()">{{ error() }}</p>
