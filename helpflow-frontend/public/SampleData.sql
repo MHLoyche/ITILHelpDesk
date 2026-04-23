@@ -18,14 +18,8 @@ INSERT INTO status (name) VALUES
 INSERT INTO supporters (name) VALUES
 ('Jonas'),
 ('Emma'),
-('Martin');
-
-INSERT INTO categories (name) VALUES
-('Email'),
-('Network'),
-('Printer'),
-('Software'),
-('VPN');
+('Martin'),
+('Unassigned');
 
 INSERT INTO sla (serviceName, responseHours, resolveHours) VALUES
 ('Email Service', 2, 8),
@@ -34,63 +28,80 @@ INSERT INTO sla (serviceName, responseHours, resolveHours) VALUES
 ('VPN Service', 2, 6),
 ('Software Support', 4, 24);
 
-INSERT INTO articles (title, content, category_id) VALUES
+INSERT INTO categories (name, sla_id) VALUES
+('Email' , 1),
+('Network', 2),
+('Printer', 3),
+('Software', 5),
+('VPN', 4);
+
+INSERT INTO articles (supporter_id, title, content, category_id) VALUES
 
 (
+1,
 'How to Reset Outlook Password',
 'If a user cannot log in to Outlook, first verify internet connection. Then navigate to the password reset portal. Confirm the account email address and complete the reset process. Restart Outlook afterwards.',
 1
 ),
 
 (
+2,
 'Email Not Sending - Troubleshooting Guide',
 'Check if Outlook is connected to the mail server. Verify internet access. Review mailbox storage quota. Restart the mail client. If issue continues, escalate to second line support.',
 1
 ),
 
 (
+1,
 'VPN Connection Failed',
 'Ensure the device has internet connection. Confirm VPN client is updated. Verify username and password. Restart the VPN client and retry. If multi-factor authentication fails, contact support.',
 5
 ),
 
 (
+3,
 'Slow Network Performance',
 'Run a speed test and compare expected bandwidth. Restart router or switch if local office issue. Check for known outages. Escalate if multiple users are affected.',
 2
 ),
 
 (
+2,
 'Printer Not Responding',
 'Check power status and network cable. Ensure printer is online. Restart print spooler service on client PC. Remove stuck print jobs and retry printing.',
 3
 ),
 
 (
+3,
 'Install Approved Software',
 'Users must request approved software through the ticket system. Support will validate license availability and install remotely if approved.',
 4
 ),
 
 (
+1,
 'Software Crashes on Startup',
 'Restart the computer first. Ensure latest updates are installed. Run the application as administrator. Reinstall application if problem persists.',
 4
 ),
 
 (
+1,
 'VPN Setup for New Employees',
 'Install the corporate VPN client from the software portal. Import company profile. Enter company credentials and test connection before remote work.',
 5
 ),
 
 (
+2,
 'Printer Toner Replacement Guide',
 'Open front panel carefully. Remove empty toner cartridge. Insert new cartridge and close panel. Print a test page to confirm functionality.',
 3
 ),
 
 (
+3,
 'How to Map Network Drive',
 'Open File Explorer. Select This PC and choose Map Network Drive. Enter provided network path. Enable reconnect at sign-in and finish setup.',
 2
@@ -105,7 +116,6 @@ INSERT INTO tickets
     requesterName,
     requesterEmail,
     supporter_id,
-    sla_id,
     category_id,
     createdAt,
     updatedAt,
@@ -122,7 +132,6 @@ VALUES
 'anna.jensen@company.local',
 1,
 1,
-1,
 NOW(),
 NOW(),
 NULL
@@ -136,7 +145,6 @@ NULL
 'Peter Hansen',
 'peter.hansen@company.local',
 2,
-4,
 5,
 NOW(),
 NOW(),
@@ -150,7 +158,6 @@ NULL
 1,
 'Sofie Larsen',
 'sofie.larsen@company.local',
-3,
 3,
 3,
 NOW(),
@@ -167,7 +174,6 @@ NULL
 'jonas.madsen@company.local',
 1,
 2,
-2,
 NOW(),
 NOW(),
 NULL
@@ -181,7 +187,6 @@ NULL
 'Emma Nielsen',
 'emma.nielsen@company.local',
 2,
-5,
 4,
 NOW(),
 NOW(),
@@ -197,7 +202,6 @@ NULL
 'lucas.pedersen@company.local',
 3,
 2,
-2,
 NOW(),
 NOW(),
 NULL
@@ -210,7 +214,6 @@ NULL
 2,
 'Freja Mortensen',
 'freja.mortensen@company.local',
-1,
 1,
 1,
 NOW(),
@@ -226,7 +229,6 @@ NULL
 'Mikkel Sørensen',
 'mikkel.sorensen@company.local',
 2,
-4,
 5,
 NOW(),
 NOW(),
@@ -242,7 +244,6 @@ NULL
 'camilla.thomsen@company.local',
 3,
 3,
-3,
 NOW(),
 NOW(),
 NOW()
@@ -256,7 +257,6 @@ NOW()
 'Oliver Kristensen',
 'oliver.kristensen@company.local',
 2,
-5,
 4,
 NOW(),
 NOW(),
@@ -272,7 +272,6 @@ NOW()
 'ida.christensen@company.local',
 1,
 2,
-2,
 NOW(),
 NOW(),
 NULL
@@ -285,7 +284,6 @@ NULL
 3,
 'Noah Rasmussen',
 'noah.rasmussen@company.local',
-1,
 1,
 1,
 NOW(),
@@ -303,7 +301,6 @@ INSERT INTO tickets (
     requesterName,
     requesterEmail,
     supporter_id,
-    sla_id,
     category_id,
     createdAt,
     updatedAt,
@@ -320,7 +317,6 @@ VALUES
 'Daniel Nielsen',
 'daniel.nielsen@email.com',
 1,
-1,
 5,
 NOW(),
 NOW(),
@@ -336,7 +332,6 @@ NULL
 'Sarah Jensen',
 'sarah.jensen@email.com',
 2,
-1,
 2,
 NOW(),
 NOW(),
@@ -352,7 +347,6 @@ NULL
 'Emma Larsen',
 'emma.larsen@email.com',
 3,
-2,
 1,
 NOW(),
 NOW(),
@@ -368,7 +362,6 @@ NULL
 'Lucas Hansen',
 'lucas.hansen@email.com',
 4,
-2,
 3,
 NOW(),
 NOW(),
@@ -383,7 +376,6 @@ NULL
 2,
 'Oliver Madsen',
 'oliver.madsen@email.com',
-1,
 1,
 4,
 NOW(),
@@ -400,7 +392,6 @@ NULL
 'Freja Thomsen',
 'freja.thomsen@email.com',
 2,
-3,
 5,
 NOW(),
 NOW(),
@@ -416,7 +407,6 @@ NULL
 'Noah Christensen',
 'noah.christensen@email.com',
 3,
-2,
 1,
 NOW(),
 NOW(),
@@ -432,7 +422,6 @@ NOW()
 'Ida Sørensen',
 'ida.sorensen@email.com',
 4,
-2,
 4,
 NOW(),
 NOW(),
@@ -448,7 +437,6 @@ NULL
 'Anna Pedersen',
 'anna.pedersen@email.com',
 1,
-3,
 5,
 NOW(),
 NOW(),
@@ -465,7 +453,6 @@ NULL
 'mikkel.rasmussen@email.com',
 2,
 3,
-3,
 NOW(),
 NOW(),
 NULL
@@ -480,7 +467,6 @@ NULL
 'Sofie Mortensen',
 'sofie.mortensen@email.com',
 3,
-2,
 5,
 NOW(),
 NOW(),
@@ -496,7 +482,6 @@ NULL
 'Jonas Poulsen',
 'jonas.poulsen@email.com',
 4,
-2,
 5,
 NOW(),
 NOW(),
@@ -511,7 +496,6 @@ NULL
 2,
 'Camilla Jørgensen',
 'camilla.jorgensen@email.com',
-1,
 1,
 5,
 NOW(),
@@ -528,7 +512,6 @@ NULL
 'Maria Olsen',
 'maria.olsen@email.com',
 2,
-3,
 1,
 NOW(),
 NOW(),
@@ -543,7 +526,6 @@ NOW()
 1,
 'Peter Holm',
 'peter.holm@email.com',
-3,
 3,
 2,
 NOW(),
@@ -560,7 +542,6 @@ NULL
 'Julie Andersen',
 'julie.andersen@email.com',
 4,
-3,
 5,
 NOW(),
 NOW(),
@@ -575,7 +556,6 @@ NULL
 2,
 'Thomas Eriksen',
 'thomas.eriksen@email.com',
-1,
 1,
 4,
 NOW(),
@@ -592,7 +572,6 @@ NULL
 'Andreas Lund',
 'andreas.lund@email.com',
 2,
-3,
 5,
 NOW(),
 NOW(),
@@ -609,7 +588,6 @@ NOW()
 'nadia.kristensen@email.com',
 3,
 3,
-3,
 NOW(),
 NOW(),
 NULL
@@ -624,7 +602,6 @@ NULL
 'Kasper Winther',
 'kasper.winther@email.com',
 4,
-2,
 5,
 NOW(),
 NOW(),
@@ -640,7 +617,6 @@ NULL
 'Louise Dahl',
 'louise.dahl@email.com',
 1,
-2,
 4,
 NOW(),
 NOW(),
@@ -655,7 +631,6 @@ NULL
 2,
 'Victor Møller',
 'victor.moller@email.com',
-2,
 2,
 5,
 NOW(),
@@ -672,7 +647,6 @@ NULL
 'Helene Berg',
 'helene.berg@email.com',
 3,
-2,
 1,
 NOW(),
 NOW(),
@@ -688,7 +662,6 @@ NULL
 'Rasmus Friis',
 'rasmus.friis@email.com',
 4,
-3,
 5,
 NOW(),
 NOW(),
@@ -703,7 +676,6 @@ NULL
 2,
 'Mathias Løyche',
 'mathias.loyche@email.com',
-1,
 1,
 5,
 NOW(),

@@ -40,7 +40,14 @@ CREATE TABLE sla (
 -- =========================
 CREATE TABLE categories (
     category_id INT AUTO_INCREMENT PRIMARY KEY,
-    name VARCHAR(150) NOT NULL
+    name VARCHAR(150) NOT NULL,
+    sla_id INT,
+    
+    CONSTRAINT fk_categories_sla
+		FOREIGN KEY (sla_id)
+        REFERENCES sla(sla_id)
+        ON DELETE SET NULL
+        ON UPDATE CASCADE
 );
 
 -- =========================
@@ -48,6 +55,7 @@ CREATE TABLE categories (
 -- =========================
 CREATE TABLE articles (
     article_id INT AUTO_INCREMENT PRIMARY KEY,
+    supporter_id INT,
     title VARCHAR(150) NOT NULL,
     content TEXT NOT NULL,
     category_id INT,
@@ -58,6 +66,11 @@ CREATE TABLE articles (
         FOREIGN KEY (category_id)
         REFERENCES categories(category_id)
         ON DELETE SET NULL
+        ON UPDATE CASCADE,
+        
+	CONSTRAINT fk_articles_supporter
+		FOREIGN KEY (supporter_id)
+        REFERENCES supporters(supporter_id)
         ON UPDATE CASCADE
 );
 
@@ -76,7 +89,6 @@ CREATE TABLE tickets (
     requesterEmail VARCHAR(255) NOT NULL,
 
     supporter_id INT NULL,
-    sla_id INT NULL,
     category_id INT NULL,
 
     createdAt DATETIME DEFAULT CURRENT_TIMESTAMP,
@@ -98,12 +110,6 @@ CREATE TABLE tickets (
     CONSTRAINT fk_tickets_supporter
         FOREIGN KEY (supporter_id)
         REFERENCES supporters(supporter_id)
-        ON DELETE SET NULL
-        ON UPDATE CASCADE,
-
-    CONSTRAINT fk_tickets_sla
-        FOREIGN KEY (sla_id)
-        REFERENCES sla(sla_id)
         ON DELETE SET NULL
         ON UPDATE CASCADE,
 

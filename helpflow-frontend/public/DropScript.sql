@@ -1,0 +1,15 @@
+USE helpflowdb;
+
+-- Disable FK checks so drop order is safe
+SET FOREIGN_KEY_CHECKS = 0;
+
+DROP TABLE IF EXISTS comments;
+DROP TABLE IF EXISTS tickets;
+DROP TABLE IF EXISTS articles;
+DROP TABLE IF EXISTS categories;
+DROP TABLE IF EXISTS sla;
+DROP TABLE IF EXISTS supporters;
+DROP TABLE IF EXISTS status;
+DROP TABLE IF EXISTS priorities;
+
+SET FOREIGN_KEY_CHECKS = 1;
