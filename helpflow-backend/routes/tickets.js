@@ -11,15 +11,20 @@ router.get('/', async (req, res) => {
         t.title,
         t.requesterName,
         t.createdAt,
+        t.updatedAt,
+        t.closedAt,
         p.name as priorityName,
         s.name AS statusName,
         i.name as supporterName,
-        c.name as categoryName
+        c.name as categoryName,
+        c.sla_id,
+        sla.resolveHours
       FROM tickets t
       LEFT JOIN status s ON t.status_id = s.status_id
       LEFT JOIN priorities p ON t.priority_id = p.priority_id
       LEFT JOIN supporters i ON t.supporter_id = i.supporter_id
       LEFT JOIN categories c ON t.category_id = c.category_id
+      LEFT JOIN sla ON c.sla_id = sla.sla_id
       ORDER BY createdAt DESC
     `);
 

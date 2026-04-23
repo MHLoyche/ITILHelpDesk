@@ -11,12 +11,12 @@
             <p>Total SLA Policies</p> 
         </article> 
         <article class="stat-card"> 
-            <h3>{{ avgResponseHours() }}h</h3> 
-            <p>Avg Response Time</p> 
+            <h3>{{ successfulHeldCount() }}</h3> 
+            <p>Successfully Held SLAs</p> 
         </article> 
         <article class="stat-card"> 
-            <h3>{{ avgResolveHours() }}h</h3> 
-            <p>Avg Resolution Time</p> 
+            <h3>{{ breachedCount() }}</h3> 
+            <p>Breached SLAs</p> 
         </article> </section> 
         <section class="sla-table-wrap"> 
             <p class="status-msg" *ngIf="loading()">Loading SLA policies...</p> 
