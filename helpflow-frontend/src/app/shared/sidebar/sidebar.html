@@ -1,8 +1,8 @@
 <aside class="sidebar">
-    <div class="sidebar-title-container">
-        <h2 class="sidebar-title">HelpFlow</h2>
-        <span class="sidebar-sub-title">ITIL Desk</span>
-    </div>
+  <div class="sidebar-title-container">
+    <h2 class="sidebar-title">HelpFlow</h2>
+    <span class="sidebar-sub-title">ITIL Desk</span>
+  </div>
 
   <nav class="sidebar-section" aria-label="Primary">
     <a routerLink="/dashboard" routerLinkActive="is-active" class="sidebar-link" [routerLinkActiveOptions]="{ exact: true }">
@@ -17,16 +17,46 @@
       <span class="sidebar-label">📚 Articles</span>
     </a>
 
-    <a routerLink="/sla-management" routerLinkActive="is-active" class="sidebar-link">
+    <a *ngIf="isSupporter()" routerLink="/sla-management" routerLinkActive="is-active" class="sidebar-link">
       <span class="sidebar-label">📈 SLA Management</span>
     </a>
 
-    <a routerLink="/reports" routerLinkActive="is-active" class="sidebar-link">
-      <span class="sidebar-label">Reports</span>
+    <a *ngIf="isSupporter()" routerLink="/reports" routerLinkActive="is-active" class="sidebar-link">
+      <span class="sidebar-label">📑 Reports</span>
     </a>
 
     <a routerLink="/contact" routerLinkActive="is-active" class="sidebar-link">
-      <span class="sidebar-label">Contact</span>
+      <span class="sidebar-label">✉️ Contact</span>
     </a>
   </nav>
+
+  <section class="sidebar-profile" aria-label="Profile role switch">
+    <div class="profile-meta">
+      <div class="profile-avatar">{{ isSupporter() ? "SP" : "UP" }}</div>
+      <div>
+        <p class="profile-name">{{ isSupporter() ? "Supporter Profile" : "User Profile" }}</p>
+        <p class="profile-sub">Access mode</p>
+      </div>
+    </div>
+
+    <div class="role-toggle">
+      <button
+        type="button"
+        class="role-btn"
+        [class.active]="role() === 'user'"
+        (click)="setRole('user')"
+      >
+        User
+      </button>
+
+      <button
+        type="button"
+        class="role-btn"
+        [class.active]="role() === 'supporter'"
+        (click)="setRole('supporter')"
+      >
+        Supporter
+      </button>
+    </div>
+  </section>
 </aside>

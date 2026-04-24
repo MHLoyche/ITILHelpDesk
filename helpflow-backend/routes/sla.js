@@ -25,7 +25,8 @@ router.get('/', async (req, res) => {
 router.post('/', async (req, res) => {
   const { categoryName, responseHours, resolveHours } = req.body;
 
-  if (!categoryName || responseHours === undefined || resolveHours === undefined) {
+  // Input validation for required fields and numeric values
+  if (!categoryName || (responseHours === undefined || responseHours <= 0) || (resolveHours === undefined || resolveHours <= 0)) {
     return res.status(400).json({
       error: 'categoryName, responseHours, and resolveHours are required',
     });
@@ -35,6 +36,7 @@ router.post('/', async (req, res) => {
   const resolveValue = Number(resolveHours);
   const trimmedCategoryName = String(categoryName).trim();
 
+  // Input validation for categoryName and numeric values
   if (!trimmedCategoryName || Number.isNaN(responseValue) || Number.isNaN(resolveValue)) {
     return res.status(400).json({ error: 'Invalid SLA values provided' });
   }
@@ -42,6 +44,7 @@ router.post('/', async (req, res) => {
   const serviceName = `${trimmedCategoryName} service`;
   const connection = await db.getConnection();
 
+  // inserts a new SLA policy and links it to the category, creating the category if it doesn't exist
   try {
     await connection.beginTransaction();
 
