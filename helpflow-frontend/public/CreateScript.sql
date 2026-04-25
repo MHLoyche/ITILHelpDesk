@@ -22,7 +22,9 @@ CREATE TABLE status (
 -- =========================
 CREATE TABLE supporters (
     supporter_id INT AUTO_INCREMENT PRIMARY KEY,
-    name VARCHAR(150) NOT NULL
+    name VARCHAR(150) NOT NULL,
+    email VARCHAR(255) NOT NULL UNIQUE,
+    phoneNumber VARCHAR(20) NULL
 );
 
 -- =========================

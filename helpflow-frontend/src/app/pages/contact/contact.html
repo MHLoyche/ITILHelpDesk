@@ -1,1 +1,26 @@
-<p>contact works!</p>
+<div class="contact-container">
+  <div class="contact-header">
+    <h1>Contact Us</h1>
+    <p>
+      If you have any questions or need assistance, please feel free to reach
+      out to us. We will attempt to respond as quickly as possible!
+    </p>
+  </div>
+
+  <div class="contact-supporters">
+    <h2>Our Supporters</h2>
+
+    <p *ngIf="loading()">Loading supporters...</p>
+    <p *ngIf="error()">{{ error() }}</p>
+
+    <div class="supporter-list" *ngIf="!loading() && !error()">
+      <div class="supporter-card" *ngFor="let supporter of supporters()">
+        <h3>{{ supporter.name }}</h3>
+        <p>Email: {{ supporter.email }}</p>
+        <p>Phone: {{ supporter.phoneNumber || "No phone number" }}</p>
+      </div>
+
+      <p *ngIf="supporters().length === 0">No supporters found.</p>
+    </div>
+  </div>
+</div>

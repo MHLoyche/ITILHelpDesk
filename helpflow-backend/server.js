@@ -13,11 +13,13 @@ app.use(express.json());
 const ticketRoutes = require('./routes/tickets');
 const articlesRoutes = require('./routes/articles');
 const slaRoutes = require('./routes/sla');
+const supportersRoutes = require('./routes/supporters');
 
 // Using routes
 app.use('/api/articles', articlesRoutes);
 app.use('/api/tickets', ticketRoutes);
 app.use('/api/slas', slaRoutes);
+app.use('/api/supporters', supportersRoutes);
 
 
 // Start server

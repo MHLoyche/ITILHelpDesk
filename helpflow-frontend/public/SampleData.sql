@@ -15,11 +15,11 @@ INSERT INTO status (name) VALUES
 ('Closed'),
 ('Escalated');
 
-INSERT INTO supporters (name) VALUES
-('Jonas'),
-('Emma'),
-('Martin'),
-('Unassigned');
+INSERT INTO supporters (name, email, phoneNumber) VALUES
+('Jonas', 'jonas@email.com', '12345678'),
+('Emma', 'emma@email.com', '12345678'),
+('Martin', 'martin@email.com', '12345678'),
+('Unassigned', 'unassigned@email.com', '12345678');
 
 INSERT INTO sla (serviceName, responseHours, resolveHours) VALUES
 ('Email Service', 2, 8),
