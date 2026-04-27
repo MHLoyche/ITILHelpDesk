@@ -1,1 +1,212 @@
-<p>dashboard works!</p>
+<section class="dashboard">
+	<header class="hero">
+		<div>
+			<p class="eyebrow">Profile specific dashboard</p>
+			<h1>{{ isSupporter() ? "Supporter Command Center" : "User Service Hub" }}</h1>
+			<p class="hero-subtitle">
+				{{
+					isSupporter()
+						? "Monitor assignment pressure, SLA health, and urgent incidents in one place."
+						: "Track ticket progress and jump into knowledge articles quickly."
+				}}
+			</p>
+		</div>
+
+		<div class="hero-links">
+			<a routerLink="/tickets" class="hero-link">Open Tickets</a>
+			<a routerLink="/articles" class="hero-link">Browse Articles</a>
+			<a *ngIf="isSupporter()" routerLink="/sla-management" class="hero-link">SLA Management</a>
+			<a routerLink="/contact" class="hero-link">Contact Team</a>
+		</div>
+	</header>
+
+	<section *ngIf="loading()" class="state-card">Loading dashboard data...</section>
+	<section *ngIf="error()" class="state-card state-error">{{ error() }}</section>
+
+	<ng-container *ngIf="!loading() && !error()">
+		<ng-container *ngIf="isSupporter(); else userDashboard">
+			<section class="stats-grid">
+				<article class="stat-card stat-assigned">
+					<p class="stat-label">Assigned Tickets</p>
+					<p class="stat-value">{{ assignedTicketsCount() }}</p>
+				</article>
+
+				<article class="stat-card stat-unassigned">
+					<p class="stat-label">Unassigned Tickets</p>
+					<p class="stat-value">{{ unassignedTicketsCount() }}</p>
+				</article>
+
+				<article class="stat-card stat-held">
+					<p class="stat-label">SLA Held</p>
+					<p class="stat-value">{{ heldSlaCount() }}</p>
+				</article>
+
+				<article class="stat-card stat-breached">
+					<p class="stat-label">SLA Breached</p>
+					<p class="stat-value">{{ breachedSlaCount() }}</p>
+				</article>
+
+				<article class="stat-card stat-overdue">
+					<p class="stat-label">Overdue Open Tickets</p>
+					<p class="stat-value">{{ overdueOpenTicketsCount() }}</p>
+				</article>
+
+				<article class="stat-card stat-policies">
+					<p class="stat-label">Active SLA Policies</p>
+					<p class="stat-value">{{ slas().length }}</p>
+				</article>
+			</section>
+
+			<section class="panel">
+				<div class="panel-head">
+					<h2>Escalated and Critical Tickets</h2>
+					<a routerLink="/tickets" class="panel-link">View All</a>
+				</div>
+
+				<p *ngIf="!escalatedAndCriticalTickets().length" class="panel-empty">
+					No escalated or critical tickets right now.
+				</p>
+
+				<div *ngIf="escalatedAndCriticalTickets().length" class="ticket-list">
+					<article class="ticket-row" *ngFor="let ticket of escalatedAndCriticalTickets()">
+						<div>
+							<p class="ticket-title">#{{ ticket.ticket_id }} {{ ticket.title }}</p>
+							<p class="ticket-meta">
+								{{ ticket.requesterName || "Unknown requester" }}
+								<span class="dot">•</span>
+								{{ ticket.supporterName || "Unassigned" }}
+							</p>
+						</div>
+
+						<div class="ticket-badges">
+							<span class="badge" [class]="'badge ' + getPriorityClass(ticket.priorityName)">
+								{{ ticket.priorityName || "Unknown Priority" }}
+							</span>
+							<span class="badge" [class]="'badge ' + getStatusClass(ticket.statusName)">
+								{{ ticket.statusName || "Unknown Status" }}
+							</span>
+						</div>
+					</article>
+				</div>
+			</section>
+
+			<section class="panel">
+				<div class="panel-head">
+					<h2>My Tickets</h2>
+					<a routerLink="/tickets" class="panel-link">View All</a>
+				</div>
+
+				<p *ngIf="!myTickets().length" class="panel-empty">
+					No tickets are currently assigned to your profile.
+				</p>
+
+				<div *ngIf="myTickets().length" class="ticket-list">
+					<article class="ticket-row" *ngFor="let ticket of myTickets()">
+						<div>
+							<p class="ticket-title">#{{ ticket.ticket_id }} {{ ticket.title }}</p>
+							<p class="ticket-meta">
+								Requester: {{ ticket.requesterName || "Unknown requester" }}
+								<span class="dot">•</span>
+								Supporter: {{ ticket.supporterName || "Unassigned" }}
+							</p>
+						</div>
+
+						<div class="ticket-badges">
+							<span class="badge" [class]="'badge ' + getPriorityClass(ticket.priorityName)">
+								{{ ticket.priorityName || "Unknown Priority" }}
+							</span>
+							<span class="badge" [class]="'badge ' + getStatusClass(ticket.statusName)">
+								{{ ticket.statusName || "Unknown Status" }}
+							</span>
+						</div>
+					</article>
+				</div>
+			</section>
+		</ng-container>
+
+		<ng-template #userDashboard>
+			<section class="stats-grid stats-grid-user">
+				<article class="stat-card stat-total">
+					<p class="stat-label">Total Tickets</p>
+					<p class="stat-value">{{ tickets().length }}</p>
+				</article>
+
+				<article class="stat-card stat-active">
+					<p class="stat-label">Active Tickets</p>
+					<p class="stat-value">{{ activeTicketsCount() }}</p>
+				</article>
+
+				<article class="stat-card stat-resolved">
+					<p class="stat-label">Resolved and Closed</p>
+					<p class="stat-value">{{ resolvedTicketsCount() }}</p>
+				</article>
+
+				<article class="stat-card stat-articles">
+					<p class="stat-label">Knowledge Articles</p>
+					<p class="stat-value">{{ articles().length }}</p>
+				</article>
+
+				<article class="stat-card stat-alerts">
+					<p class="stat-label">Critical Service Alerts</p>
+					<p class="stat-value">{{ criticalServiceAlertsCount() }}</p>
+				</article>
+			</section>
+
+			<section class="panel">
+				<div class="panel-head">
+					<h2>My Tickets</h2>
+					<a routerLink="/tickets" class="panel-link">View All</a>
+				</div>
+
+				<p *ngIf="!myTickets().length" class="panel-empty">
+					No tickets have been logged by your profile yet.
+				</p>
+
+				<div *ngIf="myTickets().length" class="ticket-list">
+					<article class="ticket-row" *ngFor="let ticket of myTickets()">
+						<div>
+							<p class="ticket-title">#{{ ticket.ticket_id }} {{ ticket.title }}</p>
+							<p class="ticket-meta">
+								Requester: {{ ticket.requesterName || "Unknown requester" }}
+								<span class="dot">•</span>
+								Supporter: {{ ticket.supporterName || "Unassigned" }}
+							</p>
+						</div>
+
+						<div class="ticket-badges">
+							<span class="badge" [class]="'badge ' + getPriorityClass(ticket.priorityName)">
+								{{ ticket.priorityName || "Unknown Priority" }}
+							</span>
+							<span class="badge" [class]="'badge ' + getStatusClass(ticket.statusName)">
+								{{ ticket.statusName || "Unknown Status" }}
+							</span>
+						</div>
+					</article>
+				</div>
+			</section>
+
+			<section class="panel">
+				<div class="panel-head">
+					<h2>Recent Articles</h2>
+					<a routerLink="/articles" class="panel-link">Open Library</a>
+				</div>
+
+				<p *ngIf="!recentArticles().length" class="panel-empty">No articles available yet.</p>
+
+				<div *ngIf="recentArticles().length" class="article-list">
+					<a
+						class="article-row"
+						*ngFor="let article of recentArticles()"
+						[routerLink]="['/articles', article.article_id]"
+					>
+						<div>
+							<p class="article-title">{{ article.title }}</p>
+							<p class="article-meta">{{ article.categoryName || "General" }}</p>
+						</div>
+						<span class="article-cta">Read</span>
+					</a>
+				</div>
+			</section>
+		</ng-template>
+	</ng-container>
+</section>

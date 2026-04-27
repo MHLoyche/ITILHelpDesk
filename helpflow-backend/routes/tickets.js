@@ -10,6 +10,7 @@ router.get('/', async (req, res) => {
         t.ticket_id,
         t.title,
         t.requesterName,
+        t.supporter_id,
         t.createdAt,
         t.updatedAt,
         t.closedAt,
