@@ -1,4 +1,4 @@
-<div class="contact-container">
+<div class="contact-page">
   <div class="contact-header">
     <h1>Contact Us</h1>
     <p>
@@ -7,20 +7,30 @@
     </p>
   </div>
 
-  <div class="contact-supporters">
+  <section class="supporters-section">
     <h2>Our Supporters</h2>
 
-    <p *ngIf="loading()">Loading supporters...</p>
-    <p *ngIf="error()">{{ error() }}</p>
+    <p class="status-msg" *ngIf="loading()">Loading supporters...</p>
+    <p class="status-msg error" *ngIf="error()">{{ error() }}</p>
 
-    <div class="supporter-list" *ngIf="!loading() && !error()">
+    <div class="supporters-grid" *ngIf="!loading() && !error()">
       <div class="supporter-card" *ngFor="let supporter of supporters()">
-        <h3>{{ supporter.name }}</h3>
-        <p>Email: {{ supporter.email }}</p>
-        <p>Phone: {{ supporter.phoneNumber || "No phone number" }}</p>
+        <div class="card-header">
+          <div class="supporter-avatar">{{ getInitials(supporter.name) }}</div>
+        </div>
+
+        <div class="card-content">
+          <h3 class="supporter-name">{{ supporter.name }}</h3>
+          <p class="supporter-email">Email: {{ supporter.email }}</p>
+          <p class="supporter-phone">Phone: {{ supporter.phoneNumber || "No phone number" }}</p>
+        </div>
+
+        <div class="card-footer">
+          <a [href]="'mailto:' + supporter.email" class="contact-btn">Contact</a>
+        </div>
       </div>
 
-      <p *ngIf="supporters().length === 0">No supporters found.</p>
+      <p class="empty-state" *ngIf="supporters().length === 0">No supporters found.</p>
     </div>
-  </div>
+  </section>
 </div>
