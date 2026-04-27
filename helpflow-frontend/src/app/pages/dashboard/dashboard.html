@@ -122,6 +122,29 @@
 					</article>
 				</div>
 			</section>
+
+			<section class="panel">
+				<div class="panel-head">
+					<h2>Recent Articles</h2>
+					<a routerLink="/articles" class="panel-link">Open Library</a>
+				</div>
+
+				<p *ngIf="!recentArticles().length" class="panel-empty">No articles available yet.</p>
+
+				<div *ngIf="recentArticles().length" class="article-list">
+					<a
+						class="article-row"
+						*ngFor="let article of recentArticles()"
+						[routerLink]="['/articles', article.article_id]"
+					>
+						<div>
+							<p class="article-title">{{ article.title }}</p>
+							<p class="article-meta">{{ article.categoryName || "General" }}</p>
+						</div>
+						<span class="article-cta">Read</span>
+					</a>
+				</div>
+			</section>
 		</ng-container>
 
 		<ng-template #userDashboard>
