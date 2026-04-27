@@ -39,6 +39,19 @@
             </select>
         </label>
 
+        <label class="filter-field">
+            <span>Supporter</span>
+            <select
+                class="filter-select"
+                (change)="selectedSupporter.set($any($event.target).value)"
+            >
+                <option value="">All Supporters</option>
+                <option *ngFor="let supporter of supporterOptions()" [value]="supporter">
+                    {{ supporter }}
+                </option>
+            </select>
+        </label>
+
     </div>
 
     <div class="tickets-table-container">

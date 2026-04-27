@@ -26,6 +26,7 @@ export class Tickets implements OnInit {
   searchTerm = signal('');
   selectedStatus = signal('');
   selectedPriority = signal('');
+  selectedSupporter = signal('');
   currentPage = signal(1);
   readonly itemsPerPage = 10;
 
@@ -49,18 +50,21 @@ export class Tickets implements OnInit {
     });
   }
 
-  // compute filtered tickets based on search term, selected status, and selected priority
+  // compute filtered tickets based on search term, selected status, selected priority, and selected supporter
   filteredTickets = computed(() => {
     const term = this.searchTerm().toLowerCase().trim();
     const status = this.selectedStatus().toLowerCase().trim();
     const priority = this.selectedPriority().toLowerCase().trim();
+    const supporter = this.selectedSupporter().toLowerCase().trim();
 
     return this.tickets().filter((ticket) => {
       const matchesSearch = !term || ticket.title.toLowerCase().includes(term) || ticket.requesterName.toLowerCase().includes(term);
       const matchesStatus = !status || (ticket.statusName || '').toLowerCase() === status;
       const matchesPriority = !priority || (ticket.priorityName || '').toLowerCase() === priority;
+      const normalizedSupporter = (ticket.supporterName || 'Unassigned').toLowerCase().trim();
+      const matchesSupporter = !supporter || normalizedSupporter === supporter;
 
-      return matchesSearch && matchesStatus && matchesPriority;
+      return matchesSearch && matchesStatus && matchesPriority && matchesSupporter;
     });
   });
 
@@ -128,6 +132,14 @@ export class Tickets implements OnInit {
     'Medium', 
     'Low'
   ];
+
+  supporterOptions = computed(() => {
+    const unique = new Set(
+      this.tickets().map((ticket) => (ticket.supporterName || 'Unassigned').trim()).filter(Boolean)
+    );
+
+    return [...unique].sort((a, b) => a.localeCompare(b));
+  });
 
   // helper methods to get CSS classes based on priority and status
   getPriorityClass(priority: string | null | undefined): string {
