@@ -52,12 +52,20 @@ export class Dashboard implements OnInit {
   readonly loading = signal(true);
   readonly error = signal<string | null>(null);
 
+  readonly supporterTickets = computed(() => {
+    return this.tickets().filter((ticket) => this.matchesCurrentSupporter(ticket));
+  });
+
+  readonly userTickets = computed(() => {
+    return this.tickets().filter((ticket) => this.matchesCurrentRequester(ticket));
+  });
+
   readonly assignedTicketsCount = computed(() => {
-    return this.tickets().filter((ticket) => (ticket.supporterName || "").trim().length > 0).length;
+    return this.supporterTickets().length;
   });
 
   readonly unassignedTicketsCount = computed(() => {
-    return this.tickets().filter((ticket) => !(ticket.supporterName || "").trim()).length;
+    return this.tickets().filter((ticket) => this.isUnassignedTicket(ticket)).length;
   });
 
   readonly heldSlaCount = computed(() => {
@@ -86,20 +94,12 @@ export class Dashboard implements OnInit {
       .slice(0, 8);
   });
 
-  readonly overdueOpenTicketsCount = computed(() => {
-    return this.tickets().filter((ticket) => this.isTicketOverdueAndOpen(ticket)).length;
-  });
-
   readonly activeTicketsCount = computed(() => {
-    return this.tickets().filter((ticket) => this.isActiveStatus(ticket.statusName)).length;
+    return this.userTickets().filter((ticket) => this.isActiveStatus(ticket.statusName)).length;
   });
 
   readonly resolvedTicketsCount = computed(() => {
-    return this.tickets().filter((ticket) => this.isClosedStatus(ticket.statusName)).length;
-  });
-
-  readonly criticalServiceAlertsCount = computed(() => {
-    return this.tickets().filter((ticket) => this.isEscalatedOrCritical(ticket)).length;
+    return this.userTickets().filter((ticket) => this.isClosedStatus(ticket.statusName)).length;
   });
 
   readonly recentArticles = computed(() => {
@@ -163,11 +163,26 @@ export class Dashboard implements OnInit {
     return status === "escalated" || priority === "critical";
   }
 
+  private isUnassignedTicket(ticket: DashboardTicket): boolean {
+    const supporterId = Number(ticket.supporter_id);
+    const supporterName = (ticket.supporterName || "").toLowerCase().trim();
+
+    return !supporterId || supporterName === "unassigned";
+  }
+
   private isMyTicket(ticket: DashboardTicket): boolean {
     if (this.isSupporter()) {
-      return ticket.supporter_id === this.currentSupporterId;
+      return this.matchesCurrentSupporter(ticket);
     }
 
+    return this.matchesCurrentRequester(ticket);
+  }
+
+  private matchesCurrentSupporter(ticket: DashboardTicket): boolean {
+    return Number(ticket.supporter_id) === this.currentSupporterId;
+  }
+
+  private matchesCurrentRequester(ticket: DashboardTicket): boolean {
     const requesterName = (ticket.requesterName || "").toLowerCase().trim();
     const requesterEmail = (ticket.requesterEmail || "").toLowerCase().trim();
 
@@ -219,19 +234,6 @@ export class Dashboard implements OnInit {
       return !!completionMs && completionMs > deadlineMs;
     }
 
-    return Date.now() > deadlineMs;
-  }
-
-  private isTicketOverdueAndOpen(ticket: DashboardTicket): boolean {
-    const resolveHours = ticket.resolveHours;
-    if (!resolveHours || resolveHours <= 0) return false;
-
-    if (this.isClosedStatus(ticket.statusName)) return false;
-
-    const createdMs = this.getTimestampValue(ticket.createdAt);
-    if (!createdMs) return false;
-
-    const deadlineMs = createdMs + resolveHours * 60 * 60 * 1000;
     return Date.now() > deadlineMs;
   }
 

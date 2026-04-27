@@ -121,10 +121,6 @@ h1 {
 	border-color: #8f0101;
 }
 
-.stat-overdue {
-	border-color: #ea580c;
-}
-
 .stat-policies {
 	border-color: #0037a4;
 }
@@ -143,10 +139,6 @@ h1 {
 
 .stat-articles {
 	border-color: #2563eb;
-}
-
-.stat-alerts {
-	border-color: #dc2626;
 }
 
 .panel {

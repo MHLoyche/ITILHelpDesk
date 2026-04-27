@@ -46,11 +46,6 @@
 					<p class="stat-value">{{ breachedSlaCount() }}</p>
 				</article>
 
-				<article class="stat-card stat-overdue">
-					<p class="stat-label">Overdue Open Tickets</p>
-					<p class="stat-value">{{ overdueOpenTicketsCount() }}</p>
-				</article>
-
 				<article class="stat-card stat-policies">
 					<p class="stat-label">Active SLA Policies</p>
 					<p class="stat-value">{{ slas().length }}</p>
@@ -151,7 +146,7 @@
 			<section class="stats-grid stats-grid-user">
 				<article class="stat-card stat-total">
 					<p class="stat-label">Total Tickets</p>
-					<p class="stat-value">{{ tickets().length }}</p>
+					<p class="stat-value">{{ userTickets().length }}</p>
 				</article>
 
 				<article class="stat-card stat-active">
@@ -167,11 +162,6 @@
 				<article class="stat-card stat-articles">
 					<p class="stat-label">Knowledge Articles</p>
 					<p class="stat-value">{{ articles().length }}</p>
-				</article>
-
-				<article class="stat-card stat-alerts">
-					<p class="stat-label">Critical Service Alerts</p>
-					<p class="stat-value">{{ criticalServiceAlertsCount() }}</p>
 				</article>
 			</section>
 
