@@ -682,3 +682,11 @@ NOW(),
 NOW(),
 NULL
 );
+
+-- Insert unique users from tickets into users table
+
+INSERT INTO users (name, email)
+SELECT DISTINCT requesterName, requesterEmail
+FROM tickets
+WHERE requesterName IS NOT NULL AND requesterEmail IS NOT NULL
+AND requesterEmail NOT IN (SELECT email FROM users);
