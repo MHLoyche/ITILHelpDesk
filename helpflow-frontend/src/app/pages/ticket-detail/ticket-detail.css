@@ -1,6 +1,7 @@
 .ticket-detail-page {
 	display: grid;
 	gap: 1.25rem;
+	padding: 10px;
 }
 
 .ticket-detail-header {
