@@ -3,22 +3,20 @@
         <div>
             <h1>Tickets</h1>
             <p class="ticket-intro">Manage and track all support tickets in the system.</p>
-    </div>
+        </div>
 
-        <button class="new-ticket-btn">+ New Ticket</button>
+        <button class="new-ticket-btn" (click)="openCreateModal()">+ New Ticket</button>
     </div>
 
     <div class="ticket-filters">
         <div class="search-wrapper">
-            <input type="text" class="search-input" placeholder="Search tickets by title, requester..." (input)="searchTerm.set($any($event.target).value)" />
+            <input type="text" class="search-input" placeholder="Search tickets by title, requester..."
+                (input)="searchTerm.set($any($event.target).value)" />
         </div>
 
         <label class="filter-field">
             <span>Status</span>
-            <select
-                class="filter-select"
-                (change)="selectedStatus.set($any($event.target).value)"
-            >
+            <select class="filter-select" (change)="selectedStatus.set($any($event.target).value)">
                 <option value="">All Statuses</option>
                 <option *ngFor="let status of statusOptions" [value]="status">
                     {{ status }}
@@ -28,10 +26,7 @@
 
         <label class="filter-field">
             <span>Priority</span>
-            <select
-                class="filter-select"
-                (change)="selectedPriority.set($any($event.target).value)"
-            >
+            <select class="filter-select" (change)="selectedPriority.set($any($event.target).value)">
                 <option value="">All Priorities</option>
                 <option *ngFor="let priority of priorityOptions" [value]="priority">
                     {{ priority }}
@@ -41,10 +36,7 @@
 
         <label class="filter-field">
             <span>Supporter</span>
-            <select
-                class="filter-select"
-                (change)="selectedSupporter.set($any($event.target).value)"
-            >
+            <select class="filter-select" (change)="selectedSupporter.set($any($event.target).value)">
                 <option value="">All Supporters</option>
                 <option *ngFor="let supporter of supporterOptions()" [value]="supporter">
                     {{ supporter }}
@@ -94,6 +86,62 @@
             </tbody>
         </table>
 
+        <div class="modal-backdrop" *ngIf="showCreateModal()">
+            <div class="modal-card">
+                <div class="modal-header">
+                    <h2>Create New Ticket</h2>
+                    <button type="button" class="close-btn" (click)="closeCreateModal()">×</button>
+                </div>
+
+                <form class="ticket-form" (ngSubmit)="createTicket()">
+                    <label>
+                        Title
+                        <input type="text" [ngModel]="newTicket().title"
+                            (ngModelChange)="updateTicketField('title', $event)" name="title"
+                            required />
+                    </label>
+
+                    <label>
+                        Description
+                        <textarea rows="5" [ngModel]="newTicket().description"
+                            (ngModelChange)="updateTicketField('description', $event)"
+                            name="description" required></textarea>
+                    </label>
+
+                    <label>
+                        Requester Name
+                        <input type="text" [ngModel]="newTicket().requesterName"
+                            (ngModelChange)="updateTicketField('requesterName', $event)"
+                            name="requesterName" required />
+                    </label>
+
+                    <label>
+                        Requester Email
+                        <input type="email" [ngModel]="newTicket().requesterEmail"
+                            (ngModelChange)="updateTicketField('requesterEmail', $event)"
+                            name="requesterEmail" required />
+                    </label>
+
+                    <label>
+                        Priority
+                        <select [ngModel]="newTicket().priority_id"
+                            (ngModelChange)="updateTicketField('priority_id', $event)"
+                            name="priority_id" required>
+                            <option [ngValue]="1">Low</option>
+                            <option [ngValue]="2">Medium</option>
+                            <option [ngValue]="3">High</option>
+                            <option [ngValue]="4">Critical</option>
+                        </select>
+                    </label>
+
+                    <div class="modal-actions">
+                        <button type="button" class="cancel-btn" (click)="closeCreateModal()">Cancel</button>
+                        <button type="submit" class="save-btn">Create Ticket</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
         <p class="empty-state" *ngIf="!loading() && !error() && filteredTickets().length === 0">
             No tickets match your filters.
         </p>
@@ -103,19 +151,20 @@
                 ← Previous
             </button>
 
-        <div class="page-numbers">
-            <button *ngFor="let page of getPageNumbers()" class="page-btn" [class.active]="page === currentPage()" (click)="goToPage(page)">
-                {{ page }}
+            <div class="page-numbers">
+                <button *ngFor="let page of getPageNumbers()" class="page-btn" [class.active]="page === currentPage()"
+                    (click)="goToPage(page)">
+                    {{ page }}
+                </button>
+            </div>
+
+            <button class="pagination-btn" [disabled]="currentPage() === totalPages()" (click)="nextPage()">
+                Next →
             </button>
+
+            <span class="page-info">
+                Page {{ currentPage() }} of {{ totalPages() }}
+            </span>
         </div>
-
-        <button class="pagination-btn" [disabled]="currentPage() === totalPages()" (click)="nextPage()">
-            Next →
-        </button>
-
-        <span class="page-info">
-            Page {{ currentPage() }} of {{ totalPages() }}
-        </span>
-    </div>
     </div>
 </div>

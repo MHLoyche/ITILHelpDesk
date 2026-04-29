@@ -102,7 +102,7 @@
 .tickets-table-container {
   background: white;
   border-radius: 12px;
-  box-shadow: 0 4px 14px rgba(0,0,0,0.08);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
   overflow: hidden;
 }
 
@@ -136,7 +136,7 @@
   background-color: #f8fafc;
 }
 
-.details-btn{
+.details-btn {
   background-color: #3b82f6;
   color: white;
   border: none;
@@ -327,4 +327,85 @@
   .page-info {
     order: -1;
   }
+}
+
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.55);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  z-index: 1000;
+}
+
+.modal-card {
+  width: min(100%, 620px);
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 1.25rem;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.25);
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.close-btn {
+  border: none;
+  background: transparent;
+  font-size: 1.75rem;
+  cursor: pointer;
+  line-height: 1;
+}
+
+.ticket-form {
+  display: grid;
+  gap: 1rem;
+}
+
+.ticket-form label {
+  display: grid;
+  gap: 0.4rem;
+  font-weight: 600;
+  color: #334155;
+}
+
+.ticket-form input,
+.ticket-form textarea,
+.ticket-form select {
+  width: 100%;
+  border: 1px solid #cbd5e1;
+  border-radius: 10px;
+  padding: 0.75rem;
+  font: inherit;
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.75rem;
+}
+
+.cancel-btn,
+.save-btn {
+  border: none;
+  border-radius: 10px;
+  padding: 0.75rem 1rem;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.cancel-btn {
+  background: #e2e8f0;
+  color: #0f172a;
+}
+
+.save-btn {
+  background: #2563eb;
+  color: white;
 }

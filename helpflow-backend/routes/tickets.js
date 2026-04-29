@@ -78,4 +78,22 @@ router.get('/:id', async (req, res) => {
   }
 });
 
+// Create a new ticket
+router.post('/', async (req, res) => {
+  const { title, description, requesterName, requesterEmail, priority_id, category_id } = req.body;
+  if (!title || !description || !requesterName || !requesterEmail || !priority_id) {
+    return res.status(400).json({ error: 'title, description, requesterName, requesterEmail, and priority_id are required' });
+  }
+
+  try {
+    const [result] = await db.query(
+      "INSERT INTO tickets (title, description, requesterName, requesterEmail, priority_id, category_id) VALUES (?, ?, ?, ?, ?, ?)",
+      [title, description, requesterName, requesterEmail, priority_id, category_id]
+    );
+    res.status(201).json({ id: result.insertId, title, description, requesterName, requesterEmail, priority_id, category_id });
+  } catch (error) {
+    res.status(500).json(error);
+  }
+});
+
 module.exports = router;

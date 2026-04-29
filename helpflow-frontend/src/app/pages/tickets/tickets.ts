@@ -2,6 +2,7 @@ import { Component, OnInit, computed, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { TicketService } from '../../services/ticket';
+import { FormsModule } from '@angular/forms';
 
 export interface Ticket {
   ticket_id: number;
@@ -17,7 +18,7 @@ export interface Ticket {
 @Component({
   selector: 'app-tickets',
   standalone: true,
-  imports: [CommonModule, RouterLink],
+  imports: [CommonModule, RouterLink, FormsModule],
   templateUrl: './tickets.html',
   styleUrl: './tickets.css'
 })
@@ -34,9 +35,65 @@ export class Tickets implements OnInit {
   loading = signal(true);
   error = signal<string | null>(null);
 
+  // modal for create new ticket
+  showCreateModal = signal(false);
+
+  newTicket = signal({
+    title: '',
+    description: '',
+    requesterName: '',
+    requesterEmail: '',
+    priority_id: 1,
+    category_id: null as number | null,
+  })
+
   // inject TicketService to fetch tickets from backend
   constructor(private ticketService: TicketService) {}
 
+  openCreateModal() {
+    this.showCreateModal.set(true);
+  }
+  
+  closeCreateModal() {
+    this.showCreateModal.set(false);
+  }
+
+  updateTicketField(field: 'title' | 'description' | 'requesterName' | 'requesterEmail' | 'priority_id' | 'category_id', value: any) {
+    this.newTicket.update(t => ({
+      ...t,
+      [field]: value
+    }));
+  }
+
+  createTicket() {
+    const ticket = this.newTicket();
+    
+    if (!ticket.title.trim() || !ticket.description.trim() || !ticket.requesterName.trim() || !ticket.requesterEmail.trim()) {
+      this.error.set("Please fill in all required fields.");
+      return;
+    }
+
+    this.ticketService.createTicket(ticket).subscribe({
+      next: () => {
+        this.closeCreateModal();
+        this.newTicket.set({
+          title: '',
+          description: '',
+          requesterName: '',
+          requesterEmail: '',
+          priority_id: 1,
+          category_id: null,
+        });
+        this.error.set(null);
+        this.ticketService.getTickets().subscribe((data) => {
+          this.tickets.set(data ?? []);
+        });
+      },
+      error: () => {
+        this.error.set("Failed to create ticket. Please try again.");
+      },
+    });
+  }
   // fetch tickets from backend on component initialization
   ngOnInit(): void {
     this.ticketService.getTickets().subscribe({
