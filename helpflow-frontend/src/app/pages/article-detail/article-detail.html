@@ -4,7 +4,7 @@
     <p *ngIf="error()">{{ error() }}</p>
 
     <article *ngIf="!loading() && !error() && article() as a">
-        <div class="article-header">
+        <header class="hero article-header">
             <div class="article-eyebrow">
                 <h1>{{ a.title }}</h1>
                 <p><strong>Author:</strong> {{ "Currently unknown" }}</p>
@@ -13,7 +13,7 @@
                 <p><strong>Updated:</strong> {{ a.updatedAt | date:'short' }}</p>
             </div>
             <a routerLink="/articles" class="back-link">← Back to Articles</a>
-        </div>
+        </header>
         <br />
         <hr />
         <br />

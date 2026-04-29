@@ -1,5 +1,5 @@
 <section class="ticket-detail-page">
-	<div class="ticket-detail-header">
+	<header class="hero ticket-detail-header">
 		<div>
 			<p class="ticket-detail-eyebrow">Ticket Details</p>
 			<h1 *ngIf="ticket(); else loadingTitle">#{{ ticket()?.ticket_id }} {{ ticket()?.title }}</h1>
@@ -10,7 +10,7 @@
 		</div>
 
 		<a routerLink="/tickets" class="back-link">← Back to Tickets</a>
-	</div>
+	</header>
 
 	<section *ngIf="loading()" class="state-card">Loading ticket...</section>
 	<section *ngIf="error()" class="state-card state-error">{{ error() }}</section>
