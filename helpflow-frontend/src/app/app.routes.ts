@@ -18,6 +18,11 @@ export const routes: Routes = [
             import("./pages/tickets/tickets").then((m) => m.Tickets),
         },
         {
+            path: "tickets/:id",
+            loadComponent: () =>
+            import("./pages/ticket-detail/ticket-detail").then((m) => m.TicketDetailComponent),
+        },
+        {
             path: "articles",
             loadComponent: () =>
             import("./pages/articles/articles").then((m) => m.Articles),

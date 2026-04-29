@@ -1,5 +1,6 @@
 import { Component, OnInit, computed, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { RouterLink } from '@angular/router';
 import { TicketService } from '../../services/ticket';
 
 export interface Ticket {
@@ -16,7 +17,7 @@ export interface Ticket {
 @Component({
   selector: 'app-tickets',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, RouterLink],
   templateUrl: './tickets.html',
   styleUrl: './tickets.css'
 })

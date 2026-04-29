@@ -58,6 +58,7 @@ router.post('/', async (req, res) => {
 
     const slaId = slaResult.insertId;
 
+    // Check if the category already exists 
     const [existingCategories] = await connection.query(
       `
         SELECT category_id
@@ -68,6 +69,7 @@ router.post('/', async (req, res) => {
       [trimmedCategoryName]
     );
 
+    // If the category already exists, update its sla_id. Otherwise, create a new category with the sla_id.
     if (existingCategories.length > 0) {
       await connection.query(
         `
@@ -89,6 +91,7 @@ router.post('/', async (req, res) => {
 
     await connection.commit();
 
+    // Return the created SLA policy with the linked category name
     res.status(201).json({
       sla_id: slaId,
       serviceName,

@@ -1,0 +1,100 @@
+<section class="ticket-detail-page">
+	<div class="ticket-detail-header">
+		<div>
+			<p class="ticket-detail-eyebrow">Ticket Details</p>
+			<h1 *ngIf="ticket(); else loadingTitle">#{{ ticket()?.ticket_id }} {{ ticket()?.title }}</h1>
+			<ng-template #loadingTitle>
+				<h1>Ticket Details</h1>
+			</ng-template>
+			<p class="ticket-detail-subtitle">Full ticket information</p>
+		</div>
+
+		<a routerLink="/tickets" class="back-link">← Back to Tickets</a>
+	</div>
+
+	<section *ngIf="loading()" class="state-card">Loading ticket...</section>
+	<section *ngIf="error()" class="state-card state-error">{{ error() }}</section>
+
+	<ng-container *ngIf="!loading() && !error() && ticket() as selectedTicket">
+		<div class="ticket-grid">
+			<article class="info-card">
+				<p class="card-label">Requester</p>
+				<p class="card-value">{{ selectedTicket.requesterName }}</p>
+			</article>
+
+			<article class="info-card">
+				<p class="card-label">Supporter</p>
+				<p class="card-value">{{ selectedTicket.supporterName || 'Unassigned' }}</p>
+			</article>
+
+			<article class="info-card">
+				<p class="card-label">Priority</p>
+				<p class="card-value">{{ selectedTicket.priorityName || 'Unknown' }}</p>
+			</article>
+
+			<article class="info-card">
+				<p class="card-label">Status</p>
+				<p class="card-value">{{ selectedTicket.statusName || 'Unknown' }}</p>
+			</article>
+
+			<article class="info-card">
+				<p class="card-label">Category</p>
+				<p class="card-value">{{ selectedTicket.categoryName || 'Uncategorized' }}</p>
+			</article>
+
+			<article class="info-card">
+				<p class="card-label">Created</p>
+				<p class="card-value">{{ selectedTicket.createdAt | date: 'medium' }}</p>
+			</article>
+
+			<article class="info-card">
+				<p class="card-label">Updated</p>
+				<p class="card-value">{{ selectedTicket.updatedAt | date: 'medium' }}</p>
+			</article>
+
+			<article class="info-card wide-card">
+				<p class="card-label">Description</p>
+				<p class="description-text">{{ selectedTicket.description }}</p>
+				<p class="card-meta" *ngIf="selectedTicket.closedAt">Closed: {{ selectedTicket.closedAt | date: 'medium' }}</p>
+			</article>
+
+			<article class="comment-section wide-card">
+				<div class="comment-header-row">
+					<div>
+						<p class="card-label">Comments</p>
+						<p class="card-meta">Please add a comment below if you have any further information or questions.</p>
+					</div>
+					<p class="card-meta">Author: {{ currentAuthorName() }}</p>
+				</div>
+
+				<section *ngIf="commentError()" class="comment-error">{{ commentError() }}</section>
+
+				<div class="comments" *ngIf="comments().length; else noComments">
+					<article class="comment-card" *ngFor="let comment of comments()">
+						<div class="comment-topline">
+							<span class="comment-author">{{ comment.authorName }}</span>
+							<span class="comment-date">{{ comment.createdAt | date: 'medium' }}</span>
+						</div>
+						<p class="comment-message">{{ comment.message }}</p>
+					</article>
+				</div>
+
+				<ng-template #noComments>
+					<p class="empty-comments">No comments yet.</p>
+				</ng-template>
+
+				<div class="comment-form">
+					<textarea
+						class="comment-input"
+						placeholder="Add a comment..."
+						[ngModel]="newComment()"
+						(ngModelChange)="newComment.set($event)"
+					></textarea>
+					<button class="comment-submit-btn" (click)="submitComment()" [disabled]="savingComment()">
+						{{ savingComment() ? 'Saving...' : 'Submit Comment' }}
+					</button>
+				</div>
+			</article>
+		</div>
+	</ng-container>
+</section>

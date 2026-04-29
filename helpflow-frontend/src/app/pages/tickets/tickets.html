@@ -89,7 +89,7 @@
                         </span>
                     </td>
                     <td>{{ ticket.createdAt | date:'short' }}</td>
-                    <td><button class="details-btn">View</button></td>
+                    <td><a class="details-btn" [routerLink]="['/tickets', ticket.ticket_id]">View</a></td>
                 </tr>
             </tbody>
         </table>

@@ -14,12 +14,14 @@ const ticketRoutes = require('./routes/tickets');
 const articlesRoutes = require('./routes/articles');
 const slaRoutes = require('./routes/sla');
 const supportersRoutes = require('./routes/supporters');
+const commentsRoutes = require('./routes/comments');
 
 // Using routes
 app.use('/api/articles', articlesRoutes);
 app.use('/api/tickets', ticketRoutes);
 app.use('/api/slas', slaRoutes);
 app.use('/api/supporters', supportersRoutes);
+app.use('/api/comments', commentsRoutes);
 
 
 // Start server

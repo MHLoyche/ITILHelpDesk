@@ -144,6 +144,10 @@
   border-radius: 10px;
   cursor: pointer;
   font-size: 14px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
 }
 
 .empty-state {
