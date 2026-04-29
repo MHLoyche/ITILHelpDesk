@@ -80,7 +80,7 @@
 
 .card-label {
 	margin: 0;
-	color: #64748b;
+	color: #000000;
 	font-size: 0.82rem;
 	font-weight: 700;
 	text-transform: uppercase;
@@ -89,14 +89,14 @@
 
 .card-value {
 	margin: 0.35rem 0 0;
-	font-size: 1.05rem;
+	font-size: 1rem;
 	font-weight: 700;
-	color: #0f172a;
+	color: #002f9c;
 }
 
 .card-meta {
 	margin: 0.3rem 0 0;
-	color: #64748b;
+	color: #353c46;
 	font-size: 0.9rem;
 }
 
