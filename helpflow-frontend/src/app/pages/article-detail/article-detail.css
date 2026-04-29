@@ -27,3 +27,8 @@
     color: #334155;
     line-height: 1.6;
 }
+
+.article-formatted {
+    white-space: pre-wrap;
+    word-break: break-word;
+}

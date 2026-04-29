@@ -39,4 +39,14 @@ export class ArticleDetail implements OnInit {
       },
     });
   }
+
+  getFormattedContent(content: string | null | undefined): string {
+    if (!content) return "No content available.";
+    // Simple formatting: replace newlines with <br> and preserve paragraphs
+    return content
+      .split(".")
+      .filter(s => s.trim())
+      .map((s) => "• " + s.trim() + ".")
+      .join("\n");
+  }
 }
