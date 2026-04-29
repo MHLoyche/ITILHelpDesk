@@ -15,6 +15,7 @@ const articlesRoutes = require('./routes/articles');
 const slaRoutes = require('./routes/sla');
 const supportersRoutes = require('./routes/supporters');
 const commentsRoutes = require('./routes/comments');
+const categoriesRoutes = require('./routes/categories');
 
 // Using routes
 app.use('/api/articles', articlesRoutes);
@@ -22,7 +23,7 @@ app.use('/api/tickets', ticketRoutes);
 app.use('/api/slas', slaRoutes);
 app.use('/api/supporters', supportersRoutes);
 app.use('/api/comments', commentsRoutes);
-
+app.use('/api/categories', categoriesRoutes);
 
 // Start server
 app.listen(process.env.PORT, () => {

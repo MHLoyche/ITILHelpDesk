@@ -87,10 +87,10 @@ router.post('/', async (req, res) => {
 
   try {
     const [result] = await db.query(
-      "INSERT INTO tickets (title, description, requesterName, requesterEmail, priority_id, category_id) VALUES (?, ?, ?, ?, ?, ?)",
-      [title, description, requesterName, requesterEmail, priority_id, category_id]
+      "INSERT INTO tickets (title, description, requesterName, requesterEmail, priority_id, category_id, status_id) VALUES (?, ?, ?, ?, ?, ?, ?)",
+      [title, description, requesterName, requesterEmail, priority_id, category_id, 1]
     );
-    res.status(201).json({ id: result.insertId, title, description, requesterName, requesterEmail, priority_id, category_id });
+    res.status(201).json({ id: result.insertId, title, description, requesterName, requesterEmail, priority_id, category_id, status_id: 1 });
   } catch (error) {
     res.status(500).json(error);
   }

@@ -111,15 +111,25 @@
                     <label>
                         Requester Name
                         <input type="text" [ngModel]="newTicket().requesterName"
-                            (ngModelChange)="updateTicketField('requesterName', $event)"
-                            name="requesterName" required />
+                            name="requesterName" readonly />
                     </label>
 
                     <label>
                         Requester Email
                         <input type="email" [ngModel]="newTicket().requesterEmail"
-                            (ngModelChange)="updateTicketField('requesterEmail', $event)"
-                            name="requesterEmail" required />
+                            name="requesterEmail" readonly />
+                    </label>
+
+                    <label>
+                        Category
+                        <select [ngModel]="newTicket().category_id"
+                            (ngModelChange)="updateTicketField('category_id', $event)"
+                            name="category_id">
+                            <option [ngValue]="null">Select a category</option>
+                            <option *ngFor="let category of categories()" [ngValue]="category.category_id">
+                                {{ category.name }}
+                            </option>
+                        </select>
                     </label>
 
                     <label>

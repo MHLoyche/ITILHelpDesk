@@ -3,6 +3,8 @@ import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { TicketService } from '../../services/ticket';
 import { FormsModule } from '@angular/forms';
+import { CategoriesService } from '../../services/categories';
+import { ProfileRoleService } from '../../services/profile-role';
 
 export interface Ticket {
   ticket_id: number;
@@ -30,6 +32,7 @@ export class Tickets implements OnInit {
   selectedPriority = signal('');
   selectedSupporter = signal('');
   currentPage = signal(1);
+  categories = signal<any[]>([]); // For category filter dropdown
   readonly itemsPerPage = 10;
 
   loading = signal(true);
@@ -47,13 +50,35 @@ export class Tickets implements OnInit {
     category_id: null as number | null,
   })
 
-  // inject TicketService to fetch tickets from backend
-  constructor(private ticketService: TicketService) {}
+  // Hardcoded user and supporter identities
+  private readonly supporterIdentity = { name: 'Jonas', email: 'jonas@email.com' };
+  private readonly userIdentity = { name: 'Anna Jensen', email: 'anna.jensen@company.local' };
+
+  readonly role = computed(() => this.profileRole.role());
+  readonly currentUserIdentity = computed(() => {
+    return this.role() === 'supporter' ? this.supporterIdentity : this.userIdentity;
+  });
+
+  // inject TicketService to fetch tickets from backend and CategoriesService to fetch categories for dropdown
+  constructor(
+    private ticketService: TicketService,
+    private categoriesService: CategoriesService,
+    private profileRole: ProfileRoleService
+  ) { }
 
   openCreateModal() {
+    const identity = this.currentUserIdentity();
+    this.newTicket.set({
+      title: '',
+      description: '',
+      requesterName: identity.name,
+      requesterEmail: identity.email,
+      priority_id: 1,
+      category_id: null,
+    });
     this.showCreateModal.set(true);
   }
-  
+
   closeCreateModal() {
     this.showCreateModal.set(false);
   }
@@ -67,7 +92,7 @@ export class Tickets implements OnInit {
 
   createTicket() {
     const ticket = this.newTicket();
-    
+
     if (!ticket.title.trim() || !ticket.description.trim() || !ticket.requesterName.trim() || !ticket.requesterEmail.trim()) {
       this.error.set("Please fill in all required fields.");
       return;
@@ -94,7 +119,7 @@ export class Tickets implements OnInit {
       },
     });
   }
-  // fetch tickets from backend on component initialization
+  // fetch tickets from backend on component initialization and fetch categories for dropdown filter.
   ngOnInit(): void {
     this.ticketService.getTickets().subscribe({
       next: (data) => {
@@ -104,6 +129,14 @@ export class Tickets implements OnInit {
       error: () => {
         this.error.set('Failed to load tickets');
         this.loading.set(false);
+      }
+    });
+    this.categoriesService.getCategories().subscribe({
+      next: (data) => {
+        this.categories.set(data ?? []);
+      },
+      error: () => {
+        console.error('Failed to load categories');
       }
     });
   }
@@ -167,7 +200,7 @@ export class Tickets implements OnInit {
       if (start === 1) end = Math.min(total, 5);
       else start = Math.max(1, end - 4);
     }
-    
+
     for (let i = start; i <= end; i++) {
       pages.push(i);
     }
@@ -185,9 +218,9 @@ export class Tickets implements OnInit {
   ];
 
   priorityOptions = [
-    'Critical', 
-    'High', 
-    'Medium', 
+    'Critical',
+    'High',
+    'Medium',
     'Low'
   ];
 
@@ -233,4 +266,6 @@ export class Tickets implements OnInit {
         return 'badge-unknown';
     }
   }
+
+
 }
