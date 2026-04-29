@@ -160,24 +160,65 @@ server.js is the entry point
 
 ## API Reference
 
-All API routes are served from `http://localhost:3000/api`.
+All API routes are served from `http://localhost:3000/api`. Base URL: `http://localhost:3000/api`
 
 ### Tickets
 
-- `GET /api/tickets`
+#### GET `/api/tickets`
+Returns all tickets with related data (status, priority, supporter, category, SLA).
 
-Returns all tickets ordered by newest first.
+#### GET `/api/tickets/:id`
+Returns a single ticket by ID with full details.
+
+**Parameters:**
+- `id` (integer, required) - Ticket ID
+
+#### POST `/api/tickets`
+Creates a new ticket. Automatically sets `status_id = 1` (Open).
 
 ### Articles
 
-- `GET /api/articles`
+#### GET `/api/articles`
+Returns all articles with category names, ordered by newest first.
 
-Returns all articles ordered by newest first.
+#### GET `/api/articles/:id`
+Returns a single article by ID.
 
+**Parameters:**
+- `id` (integer, required) - Article ID
 
-- `GET /api/articles/:id`
+### Categories
 
-Returns one article by ID.
+#### GET `/api/categories`
+Returns all ticket categories available for selection.
+
+### Comments
+
+#### GET `/api/comments?ticket_id=:id`
+Returns all comments for a specific ticket, ordered by creation date.
+
+**Query Parameters:**
+- `ticket_id` (integer, required) - Ticket ID to fetch comments for
+
+#### POST `/api/comments`
+Creates a new comment on a ticket.
+
+**Required Fields:** ticket_id, message, authorName
+
+### Supporters
+
+#### GET `/api/supporters`
+Returns all support staff members.
+
+### SLA (Service Level Agreements)
+
+#### GET `/api/slas`
+Returns all SLA policies with response and resolve time targets.
+
+#### POST `/api/slas`
+Creates a new SLA policy.
+
+**Required Fields:** categoryName, responseHours, resolveHours
 
 ## Database Schema
 
