@@ -37,11 +37,7 @@ export const routes: Routes = [
             loadComponent: () =>
             import("./pages/sla-management/sla-management").then((m) => m.SlaManagement),
         },
-        {
-            path: "reports",
-            loadComponent: () =>
-            import("./pages/reports/reports").then((m) => m.Reports),
-        },
+        // Reports route removed
         {
             path: "contact",
             loadComponent: () =>

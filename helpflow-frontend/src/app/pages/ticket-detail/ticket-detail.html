@@ -9,7 +9,17 @@
 			<p class="ticket-detail-subtitle">Full ticket information</p>
 		</div>
 
-		<a routerLink="/tickets" class="back-link">← Back to Tickets</a>
+		<div class="header-actions">
+			<button
+				type="button"
+				class="edit-btn"
+				(click)="startEdit()"
+				[disabled]="loading() || !ticket() || editing()"
+			>
+				Edit Ticket
+			</button>
+			<a routerLink="/tickets" class="back-link">← Back to Tickets</a>
+		</div>
 	</header>
 
 	<section *ngIf="loading()" class="state-card">Loading ticket...</section>
@@ -52,10 +62,54 @@
 				<p class="card-value">{{ selectedTicket.updatedAt | date: 'medium' }}</p>
 			</article>
 
-			<article class="info-card wide-card">
+			<article class="info-card wide-card" *ngIf="!editing()">
 				<p class="card-label">Description</p>
 				<p class="description-text">{{ selectedTicket.description }}</p>
 				<p class="card-meta" *ngIf="selectedTicket.closedAt">Closed: {{ selectedTicket.closedAt | date: 'medium' }}</p>
+			</article>
+
+			<article class="info-card wide-card" *ngIf="editing()">
+				<p class="card-label">Edit Ticket</p>
+
+				<label class="edit-label">Title</label>
+				<input
+					class="edit-input"
+					type="text"
+					[ngModel]="editForm().title"
+					(ngModelChange)="updateEditField('title', $event)"
+				/>
+
+				<label class="edit-label">Description</label>
+				<textarea
+					class="edit-textarea"
+					[ngModel]="editForm().description"
+					(ngModelChange)="updateEditField('description', $event)"
+				></textarea>
+
+				<ng-container *ngIf="isSupporter()">
+					<label class="edit-label">Assigned Supporter</label>
+					<select
+						class="edit-input"
+						[ngModel]="editForm().supporter_id ?? ''"
+						(ngModelChange)="updateSupporterField($event)"
+					>
+						<option value="">Unassigned</option>
+						<option *ngFor="let supporter of supporters()" [value]="supporter.supporter_id">
+							{{ supporter.name }}
+						</option>
+					</select>
+				</ng-container>
+
+				<p class="comment-error" *ngIf="editError()">{{ editError() }}</p>
+
+				<div class="edit-actions">
+					<button class="comment-submit-btn" type="button" (click)="saveEdit()" [disabled]="savingEdit()">
+						{{ savingEdit() ? 'Saving...' : 'Save Changes' }}
+					</button>
+					<button class="cancel-edit-btn" type="button" (click)="cancelEdit()" [disabled]="savingEdit()">
+						Cancel
+					</button>
+				</div>
 			</article>
 
 			<article class="comment-section wide-card">

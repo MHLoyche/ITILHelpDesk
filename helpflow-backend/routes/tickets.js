@@ -96,4 +96,62 @@ router.post('/', async (req, res) => {
   }
 });
 
+// Update ticket (title and description)
+router.put('/:id', async (req, res) => {
+  const { id } = req.params;
+  const { title, description, supporter_id } = req.body;
+
+  if (!title || !description) {
+    return res.status(400).json({ error: 'title and description are required' });
+  }
+
+  try {
+    const [result] = await db.query(
+      `
+      UPDATE tickets
+      SET title = ?, description = ?, supporter_id = ?, updatedAt = NOW()
+      WHERE ticket_id = ?
+      `,
+      [title, description, supporter_id ?? null, id]
+    );
+
+    if (result.affectedRows === 0) {
+      return res.status(404).json({ error: 'Ticket not found' });
+    }
+
+    const [rows] = await db.query(
+      `
+      SELECT
+        t.ticket_id,
+        t.title,
+        t.description,
+        t.requesterName,
+        t.requesterEmail,
+        t.supporter_id,
+        t.createdAt,
+        t.updatedAt,
+        t.closedAt,
+        p.name as priorityName,
+        s.name AS statusName,
+        i.name as supporterName,
+        c.name as categoryName,
+        c.sla_id,
+        sla.resolveHours
+      FROM tickets t
+      LEFT JOIN status s ON t.status_id = s.status_id
+      LEFT JOIN priorities p ON t.priority_id = p.priority_id
+      LEFT JOIN supporters i ON t.supporter_id = i.supporter_id
+      LEFT JOIN categories c ON t.category_id = c.category_id
+      LEFT JOIN sla ON c.sla_id = sla.sla_id
+      WHERE t.ticket_id = ?
+      `,
+      [id]
+    );
+
+    return res.json(rows[0]);
+  } catch (error) {
+    return res.status(500).json(error);
+  }
+});
+
 module.exports = router;

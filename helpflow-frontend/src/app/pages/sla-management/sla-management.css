@@ -174,11 +174,26 @@
     border-radius: 12px;
     box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
     overflow: hidden;
+    -webkit-overflow-scrolling: touch;
 }
 
 .sla-table {
     width: 100%;
+    min-width: 720px;
     border-collapse: collapse;
+}
+
+@media (max-width: 900px) {
+    .sla-table-wrap {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        /* allow horizontal touch panning */
+        touch-action: pan-x pan-y;
+    }
+
+    .sla-table {
+        min-width: 640px;
+    }
 }
 
 .sla-table thead {

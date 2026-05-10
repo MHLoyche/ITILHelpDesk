@@ -1,8 +1,10 @@
-<aside class="sidebar">
+<aside class="sidebar" [class.open]="open()">
   <div class="sidebar-title-container">
     <h2 class="sidebar-title">HelpFlow</h2>
     <span class="sidebar-sub-title">ITIL Desk</span>
   </div>
+
+  <button class="sidebar-close" aria-label="Close menu" (click)="open.set(false)">✕</button>
 
   <nav class="sidebar-section" aria-label="Primary">
     <a routerLink="/dashboard" routerLinkActive="is-active" class="sidebar-link" [routerLinkActiveOptions]="{ exact: true }">
@@ -21,9 +23,7 @@
       <span class="sidebar-label">📈 SLA Management</span>
     </a>
 
-    <a *ngIf="isSupporter()" routerLink="/reports" routerLinkActive="is-active" class="sidebar-link">
-      <span class="sidebar-label">📑 Reports</span>
-    </a>
+    <!-- Reports removed -->
 
     <a routerLink="/contact" routerLinkActive="is-active" class="sidebar-link">
       <span class="sidebar-label">✉️ Contact</span>

@@ -45,6 +45,28 @@
 	font-weight: 600;
 }
 
+.header-actions {
+	display: flex;
+	gap: 0.6rem;
+	align-items: center;
+}
+
+.edit-btn {
+	text-decoration: none;
+	background: #2563eb;
+	border: 1px solid #1d4ed8;
+	color: #ffffff;
+	padding: 0.6rem 0.9rem;
+	border-radius: 10px;
+	font-weight: 600;
+	cursor: pointer;
+}
+
+.edit-btn:disabled {
+	opacity: 0.7;
+	cursor: not-allowed;
+}
+
 .state-card {
 	border-radius: 12px;
 	border: 1px solid #d9e2ef;
@@ -104,6 +126,47 @@
 	margin: 0.45rem 0 0;
 	color: #334155;
 	line-height: 1.6;
+}
+
+.edit-label {
+	display: block;
+	margin: 0.7rem 0 0.3rem;
+	font-size: 0.85rem;
+	font-weight: 700;
+	color: #0f172a;
+}
+
+.edit-input,
+.edit-textarea {
+	width: 100%;
+	border: 1px solid #dbe3ef;
+	border-radius: 10px;
+	background: #fff;
+	color: #0f172a;
+	font-size: 0.95rem;
+	box-sizing: border-box;
+	padding: 0.7rem 0.9rem;
+}
+
+.edit-textarea {
+	min-height: 110px;
+	resize: vertical;
+}
+
+.edit-actions {
+	display: flex;
+	gap: 0.6rem;
+	margin-top: 0.85rem;
+}
+
+.cancel-edit-btn {
+	background: #ffffff;
+	color: #0f172a;
+	border: 1px solid #cbd5e1;
+	padding: 0.65rem 1rem;
+	border-radius: 10px;
+	font-weight: 700;
+	cursor: pointer;
 }
 
 .comment-section {

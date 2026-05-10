@@ -2,9 +2,10 @@ import { CommonModule } from "@angular/common";
 import { Component, OnInit, computed, inject, signal } from "@angular/core";
 import { FormsModule } from "@angular/forms";
 import { ActivatedRoute, RouterLink } from "@angular/router";
-import { TicketDetail as TicketDetailModel, TicketService } from "../../services/ticket";
+import { TicketDetail as TicketDetailModel, TicketService, UpdateTicketRequest } from "../../services/ticket";
 import { CommentsService, CommentItem } from "../../services/comments";
 import { ProfileRoleService } from "../../services/profile-role";
+import { Supporter, SupporterService } from "../../services/supporters";
 
 @Component({
   selector: "app-ticket-detail",
@@ -19,20 +20,32 @@ export class TicketDetailComponent implements OnInit {
 
   ticket = signal<TicketDetailModel | null>(null);
   comments = signal<CommentItem[]>([]);
+  supporters = signal<Supporter[]>([]);
   newComment = signal("");
   savingComment = signal(false);
   commentError = signal<string | null>(null);
+  editing = signal(false);
+  savingEdit = signal(false);
+  editError = signal<string | null>(null);
   loading = signal(true);
   error = signal<string | null>(null);
 
+  editForm = signal<UpdateTicketRequest>({
+    title: "",
+    description: "",
+    supporter_id: null,
+  });
+
   readonly role = this.profileRole.role;
+  readonly isSupporter = computed(() => this.role() === "supporter");
   readonly currentAuthorName = computed(() => {
     return this.role() === "supporter" ? "Jonas" : "Anna Jensen";
   });
 
   constructor(
     private route: ActivatedRoute,
-    private ticketService: TicketService
+    private ticketService: TicketService,
+    private supporterService: SupporterService
   ) {}
 
   ngOnInit(): void {
@@ -48,6 +61,7 @@ export class TicketDetailComponent implements OnInit {
       next: (data) => {
         this.ticket.set(data);
         this.loadComments(id);
+        this.loadSupporters();
         this.loading.set(false);
       },
       error: () => {
@@ -91,6 +105,73 @@ export class TicketDetailComponent implements OnInit {
     });
   }
 
+  startEdit(): void {
+    const current = this.ticket();
+    if (!current) {
+      return;
+    }
+
+    this.editForm.set({
+      title: current.title ?? "",
+      description: current.description ?? "",
+      supporter_id: current.supporter_id ?? null,
+    });
+    this.editError.set(null);
+    this.editing.set(true);
+  }
+
+  cancelEdit(): void {
+    this.editing.set(false);
+    this.editError.set(null);
+  }
+
+  updateEditField(field: "title" | "description", value: string): void {
+    this.editForm.update((current) => ({
+      ...current,
+      [field]: value,
+    }));
+  }
+
+  updateSupporterField(value: string): void {
+    this.editForm.update((current) => ({
+      ...current,
+      supporter_id: value === "" ? null : Number(value),
+    }));
+  }
+
+  saveEdit(): void {
+    const current = this.ticket();
+    if (!current) {
+      return;
+    }
+
+    const payload: UpdateTicketRequest = {
+      title: this.editForm().title.trim(),
+      description: this.editForm().description.trim(),
+      supporter_id: this.editForm().supporter_id ?? null,
+    };
+
+    if (!payload.title || !payload.description) {
+      this.editError.set("Title and description are required.");
+      return;
+    }
+
+    this.savingEdit.set(true);
+    this.editError.set(null);
+
+    this.ticketService.updateTicket(current.ticket_id, payload).subscribe({
+      next: (updatedTicket) => {
+        this.ticket.set(updatedTicket);
+        this.editing.set(false);
+        this.savingEdit.set(false);
+      },
+      error: () => {
+        this.editError.set("Failed to update ticket.");
+        this.savingEdit.set(false);
+      },
+    });
+  }
+
   private loadComments(ticketId: number): void {
     this.commentsService.getComments(ticketId).subscribe({
       next: (data) => {
@@ -98,6 +179,17 @@ export class TicketDetailComponent implements OnInit {
       },
       error: () => {
         this.commentError.set("Failed to load comments.");
+      },
+    });
+  }
+
+  private loadSupporters(): void {
+    this.supporterService.getSupporters().subscribe({
+      next: (data) => {
+        this.supporters.set(data ?? []);
+      },
+      error: () => {
+        this.supporters.set([]);
       },
     });
   }

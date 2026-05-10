@@ -24,8 +24,15 @@ export interface CreateTicketRequest {
   title: string;
   description: string;
   requesterName: string;
+  requesterEmail: string;
   priority_id: number;
   category_id?: number | null;
+}
+
+export interface UpdateTicketRequest {
+  title: string;
+  description: string;
+  supporter_id?: number | null;
 }
 
 @Injectable({
@@ -47,5 +54,9 @@ export class TicketService {
 
   createTicket(payload: CreateTicketRequest): Observable<any> {
     return this.http.post<any>(this.apiUrl, payload);
+  }
+
+  updateTicket(id: number, payload: UpdateTicketRequest): Observable<TicketDetail> {
+    return this.http.put<TicketDetail>(`${this.apiUrl}/${id}`, payload);
   }
 }

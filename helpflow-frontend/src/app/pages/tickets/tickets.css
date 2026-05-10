@@ -109,11 +109,15 @@
   border-radius: 12px;
   box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
   overflow: hidden;
+  /* enable horizontal scrolling on small screens */
+  -webkit-overflow-scrolling: touch;
 }
 
 /* Table */
 .tickets-table {
   width: 100%;
+  /* ensure table can overflow horizontally on narrow viewports */
+  min-width: 900px;
   border-collapse: collapse;
 }
 
@@ -413,4 +417,18 @@
 .save-btn {
   background: #2563eb;
   color: white;
+}
+
+/* Mobile: allow table container to scroll horizontally */
+@media (max-width: 900px) {
+  .tickets-table-container {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    /* allow horizontal and vertical panning so finger drags work */
+    touch-action: pan-x pan-y;
+  }
+
+  .tickets-table {
+    min-width: 720px;
+  }
 }
