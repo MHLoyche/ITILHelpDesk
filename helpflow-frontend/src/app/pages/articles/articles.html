@@ -26,9 +26,9 @@
             </div>
 
             <div class="article-meta">
-                <h3 class="article-title">
+                <h2 class="article-title">
                     {{ article.categoryName || "Uncategorized" }} - {{ article.title }}
-                </h3>
+                </h2>
                 <p class="article-preview">
                 {{ article.content | slice: 0:110 }}
                 {{ article.content.length > 110 ? "..." : "" }}

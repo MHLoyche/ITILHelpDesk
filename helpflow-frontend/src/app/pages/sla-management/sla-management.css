@@ -153,9 +153,9 @@
     box-shadow: 0 4px 14px rgba(0, 0, 0, 0.06);
 }
 
-.stat-card-held h3,
-.stat-card-breached h3,
-.stat-card-total h3 {
+.stat-card-held h2,
+.stat-card-breached h2,
+.stat-card-total h2 {
     margin: 0;
     font-size: 1.8rem;
     color: #0f172a;
