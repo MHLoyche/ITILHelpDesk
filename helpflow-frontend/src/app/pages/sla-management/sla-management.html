@@ -7,15 +7,15 @@
         <button class="new-policy-btn" type="button" (click)="openCreateForm()">+ New SLA Policy</button> 
     </header> <section class="sla-stats"> 
         <article class="stat-card-total"> 
-            <h3>{{ totalPolicies() }}</h3> 
+            <h2>{{ totalPolicies() }}</h2> 
             <p>Total SLA Policies</p> 
         </article> 
         <article class="stat-card-held"> 
-            <h3>{{ successfulHeldCount() }}</h3> 
+            <h2>{{ successfulHeldCount() }}</h2> 
             <p>Successfully Held SLAs</p> 
         </article> 
         <article class="stat-card-breached"> 
-            <h3>{{ breachedCount() }}</h3> 
+            <h2>{{ breachedCount() }}</h2> 
             <p>Breached SLAs</p> 
         </article> </section> 
 

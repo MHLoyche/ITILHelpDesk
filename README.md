@@ -1,6 +1,7 @@
 # HelpFlow ITIL Desk
 
 Angular application for building an ITIL-style help desk interface and workflows.
+The project itself is a service help desk that will help with communication and problem solving of technical issues that the user may be having. This will be resolved through a ticket system, where a user can describe their issue in detail. After the ticket is created, a timeline will be set according to the category of the problem. There will be possibility for communication between the user and the supporter through a comment system.
 
 ## Full Stack Overview
 

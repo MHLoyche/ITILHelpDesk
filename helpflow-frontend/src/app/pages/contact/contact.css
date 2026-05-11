@@ -29,6 +29,7 @@
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
   gap: 1.5rem;
+  min-height: 400px;
 }
 
 .supporter-card {
@@ -118,6 +119,10 @@
   padding: 1rem;
   color: #64748b;
   text-align: center;
+  min-height: 400px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .status-msg.error {
@@ -159,4 +164,19 @@
   border: 1px solid #e2e8f0;
   border-radius: 12px;
   box-shadow: 0 4px 14px rgba(0, 0, 0, 0.06);
+  line-height: 1.6;
+}
+
+.information-section h3 {
+  margin: 0 0 1rem;
+  font-size: 1.2rem;
+  color: #0f172a;
+  font-weight: 700;
+}
+
+.information-section p {
+  margin: 0;
+  color: #64748b;
+  font-size: 0.95rem;
+  line-height: 1.6;
 }
